@@ -54,7 +54,7 @@ static navigationOptions = {
 
   render() {
     return (
-       <View style={{flex: 1}}>
+  <View style={{flex: 1}}>
         <TabNavigator   Style={styles.tab} >
 
             <TabNavigator.Item
@@ -64,7 +64,7 @@ static navigationOptions = {
             renderSelectedIcon={() => <Image source={require('./assets/12.png')} style={styles.iconStyle}/>}
             badgeText=""
             onPress={() => this.setState({ selectedTab: 'Browse' })}>    
-            <Plan {...this.props}  ref={e=>this.Browse=e}/>
+            <Pla {...this.props}  />
             </TabNavigator.Item>
 
 
@@ -76,19 +76,9 @@ static navigationOptions = {
             renderSelectedIcon={() => <Image source={require('./assets/22.png')}  style={styles.iconStyle}/>}
             
             onPress={() => this.setState({ selectedTab: 'Search' })}>     
-            <Pla {...this.props}  ref={e=>this.Search=e}/>            
+            <Plan {...this.props}  />            
             </TabNavigator.Item>
-
-
-           
-            <TabNavigator.Item                        
-            selected={this.state.selectedTab === 'Calc'}
-            title="统计"
-            renderIcon={() => <Image source={require('./assets/3.png')} style={styles.iconStyle}/>}
-            renderSelectedIcon={() => <Image source={require('./assets/32.png')}  style={styles.iconStyle}/>}
-            onPress={() => this.setState({ selectedTab: 'Calc' })}>            
-            <Plan {...this.props}  ref={e=>this.Calc=e}/>
-            </TabNavigator.Item>
+ 
 
  
           </TabNavigator>
@@ -96,6 +86,11 @@ static navigationOptions = {
     );
   }
 }
+
+
+ 
+
+ 
 
 
 const styles = StyleSheet.create({
@@ -107,6 +102,10 @@ const styles = StyleSheet.create({
     width:w,
     bottom:0,
     
+  },
+  icon: {
+    width: 26,
+    height: 26,
   },
   welcome: {
     fontSize: 20,
@@ -130,15 +129,11 @@ const styles = StyleSheet.create({
 });
 
 const todoAPP = StackNavigator({
+  HomeScreen: { screen: HomeScreen },
   Plan: { screen: Plan },
   Pla: { screen: Pla },
-  HomeScreen: { screen: HomeScreen },
+  
 });
-
 
 AppRegistry.registerComponent('todoAPP', () => todoAPP);
 
-
-
-
- 

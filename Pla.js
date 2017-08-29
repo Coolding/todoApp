@@ -29,7 +29,7 @@ export default class Pla extends Component {
   render() {
     return (
      
-        <Text>dddddddddddddddddd</Text>        
+        <Text>PLAN</Text>        
      
     );
   }

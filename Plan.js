@@ -24,12 +24,14 @@ var h=Dimensions.get('window').height;  //获得屏幕的宽高
 
 export default class Plan extends Component {
  
- 
+ static navigationOptions = {
+     header:null
+  };
 
   render() {
     return (
      
-        <Text>dddddddddddddddddd</Text>        
+        <Text>plan</Text>        
      
     );
   }
