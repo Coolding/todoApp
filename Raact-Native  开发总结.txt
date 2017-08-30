@@ -1,9 +1,16 @@
 ﻿Raact-Native 定位APP开发总结
 
 ************************************************************************************************
+使用yarn安装依赖：npm install -g yarn
+
+替换成淘宝的镜像
+yarn config set registry 'https://registry.npm.taobao.org'
+需要使用的时候：yarn add 包名称
+************************************************************************************************
 react-navigation 使用总结
 先安装
 yarn add  react-navigation
+
 
 react-navigation有三种形式：
 StackNavigator-一次渲染一个screen,在screen之间切换.当一个新的screen被打开的时候,他被放在栈顶.
@@ -11,14 +18,22 @@ TabNavigator-渲染出一个tab bar让用户可以在多个screen之间切换.
 DrawNavigator
 这三种不能同时使用？
 
+在index.android.js 定义导航栈
 const todoAPP = StackNavigator({
   HomeScreen: { screen: HomeScreen },
   Plan: { screen: Plan },  
 });
 注意这里是有顺序的，StackNavigator是一个导航栈，APP会显示写在第一个的HomeScreen，如果上下两行换一下
 则APP会显示Plan
+同时这里定义的每个导航页面都要记得先import
 
+跳转页面带参数
+this.props.navigation.navigate('ShowPlanItem',{Category: '计算机'})
+跳转后的页面获取传递过来的参数：
+const { params } = this.props.navigation.state;
+this.setState({Category:params.Category})
 
+this.props.navigation.goBack(); 回到上一页
 
 
 ************************************************************************************************

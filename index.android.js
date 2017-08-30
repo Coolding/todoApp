@@ -23,8 +23,12 @@ import {
   StackNavigator,
 } from 'react-navigation';
 
-import Plan from './Plan';
+import PlanManage from './PlanManage';
+import PlanCategory from './PlanCategory';
 import Pla from './Pla';
+import ShowPlanItem from './ShowPlanItem';
+
+
 // import Search from './Search';
 // import Calc from './Calc';
 // import Category from './Category';
@@ -71,12 +75,11 @@ static navigationOptions = {
             
             <TabNavigator.Item                    
             selected={this.state.selectedTab === 'Search'}
-            title="搜索"
+            title="计划管理"
             renderIcon={() => <Image source={require('./assets/2.png')} style={styles.iconStyle}/>}
-            renderSelectedIcon={() => <Image source={require('./assets/22.png')}  style={styles.iconStyle}/>}
-            
+            renderSelectedIcon={() => <Image source={require('./assets/22.png')}  style={styles.iconStyle}/>}            
             onPress={() => this.setState({ selectedTab: 'Search' })}>     
-            <Plan {...this.props}  />            
+            <PlanManage {...this.props}  />            
             </TabNavigator.Item>
  
 
@@ -130,8 +133,10 @@ const styles = StyleSheet.create({
 
 const todoAPP = StackNavigator({
   HomeScreen: { screen: HomeScreen },
-  Plan: { screen: Plan },
+  PlanManage: { screen: PlanManage },
+  PlanCategory: { screen: PlanCategory },
   Pla: { screen: Pla },
+  ShowPlanItem: { screen: ShowPlanItem },
   
 });
 
