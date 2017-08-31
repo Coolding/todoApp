@@ -55,8 +55,8 @@ componentWillMount() {
   }
 
 
-  modifyIfYearChildPlay=(index)=>{
-    let url="http://todoapp.applinzi.com/zuoewlzhflnqcur/modifyIfYearChildPlay/";
+  modifyIfYearChildPlan=(index)=>{
+    let url="http://todoapp.applinzi.com/zuoewlzhflnqcur/modifyIfYearChildPlan/";
     let formData=new FormData();      
     formData.append("ChildID",PlanDetail[index]['ChildID']); 
     fetch(url,{method:"POST",headers:{},body:formData}).then(response => response)
@@ -96,7 +96,7 @@ componentWillMount() {
                                         <Text style={{width:0.68*w,marginLeft:5}}>{Item['ChildPlan']}</Text>
                                         <TouchableOpacity 
                                            style={{backgroundColor:'#BEB3F7',justifyContent: 'center',alignItems:'center',marginLeft:5,width:30,height:30,borderRadius:5,}}
-                                            onPress={()=>this.modifyIfYearChildPlay(index)}>
+                                            onPress={()=>this.modifyIfYearChildPlan(index)}>
                                            <Text style={{color:'white',fontSize:20}}>{Item['ifYearChildPlan']==1?"一":"+"}</Text>
                                        </TouchableOpacity>
                                     </TouchableOpacity>

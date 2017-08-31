@@ -23,14 +23,14 @@ import {
 var w=Dimensions.get('window').width;
 var h=Dimensions.get('window').height;  //获得屏幕的宽高
 
-
+PlanItem=[]
 
 export default class ShowMonthPlanDetail extends Component {
 
   constructor(props) {  
     super(props); 
      this.state = {
-        PlanItem:[]
+        
     }; 
   }  
 
@@ -41,17 +41,42 @@ export default class ShowMonthPlanDetail extends Component {
   };
 
   componentWillMount() {  
- 
+       
         let url="http://todoapp.applinzi.com/uqwoeirqljlzcuvoq/ShowMonthPlanDetail/";
         let formData=new FormData();        
         fetch(url,{method:"GET",headers:{}}).then(response => response.json())
         .then(data =>{          
-             this.setState({PlanItem:data})
+              PlanItem=data;
+              this.forceUpdate();
        })
     
 }
 
+modifyIfYearChildPlan=(index)=>{
+    Item=PlanItem[index]
+     if(Item['ChildPlan'] ) {   //子计划非空，则将子计划设为近期计划
+        let url="http://todoapp.applinzi.com/zuoewlzhflnqcur/modifyIfRecentChildPlan/";
+        let formData=new FormData();      
+        formData.append("ChildID",Item['ChildID']); 
+        fetch(url,{method:"POST",headers:{},body:formData}).then(response => response)
+        .then(data =>{               
+            Item['ifRecentChildPlan']=Math.abs(Item['ifRecentChildPlan']-1)
+            this.forceUpdate();
+        })
+     } 
+     else{   //若子计划为空，则将父计划标记为近期计划
+         let url="http://todoapp.applinzi.com/zuoewlzhflnqcur/modifyIfRecentPlan/";
+         let formData=new FormData();      
+         formData.append("ID",Item['ID']); 
+         fetch(url,{method:"POST",headers:{},body:formData}).then(response => response)
+         .then(data =>{               
+            Item['ifRecentPlan']=Math.abs(Item['ifRecentPlan']-1)
+            this.forceUpdate();
+        })
+     }
 
+
+  }
 
   render() {
     return (
@@ -59,18 +84,30 @@ export default class ShowMonthPlanDetail extends Component {
             <View style={styles.header}>  
                   <Text style={styles.headtitle}>月度计划</Text> 
             </View>  
-        <ScrollView>
-        {
-          this.state.PlanItem.map(
-                 (Item,index)=>{ 
+         <ScrollView>
+             {
+                PlanItem.map(
+                      (Item,index)=>{ 
                           return(
-                              <Text key={index}>{Item['Plan']}：{Item['ChildPlan']}</Text>
-
-
-                           )
-            })
-        }
-        </ScrollView>
+                                <View key={index} style={{backgroundColor:'white',flexDirection:'row', justifyContent: 'flex-start', alignItems: 'center',  width:0.88*w,height:60,marginLeft:0.06*w,marginBottom:0.06*w,borderTopRightRadius:5,borderBottomRightRadius:5,}}>
+                                    <View style={{backgroundColor:'#BEB3F7',borderTopLeftRadius:5,borderBottomLeftRadius:5,width:10,height:60}}></View>
+                                    <TouchableOpacity 
+                                        style={{flexDirection: 'row',justifyContent: 'flex-start',alignItems:'center',width:0.85*w,height:60}}
+                                         onPress={()=>alert('ok')}>
+                                        <Text style={{width:0.68*w,marginLeft:5}}>{Item['Plan']}：{Item['ChildPlan']}</Text>
+                                        <TouchableOpacity 
+                                           style={{backgroundColor:'#BEB3F7',justifyContent: 'center',alignItems:'center',marginLeft:5,width:30,height:30,borderRadius:5,}}
+                                            onPress={()=>this.modifyIfYearChildPlan(index)}>
+                                           <Text style={{color:'white',fontSize:20}}>{( ((Item['ChildPlan']) && Item['ifRecentChildPlan']==1) || (!Item['ChildPlan'] && Item['ifRecentPlan']==1)    )?"一":"+"}</Text>
+                                       </TouchableOpacity>
+                                    </TouchableOpacity>
+                                    
+                                </View>  
+                          )
+                      }
+                )
+            }
+            </ScrollView>
         </View>
 
     )
