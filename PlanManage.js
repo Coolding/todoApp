@@ -39,19 +39,21 @@ export default class PlanManage extends Component {
                         <View style={{backgroundColor:'#BEB3F7',borderTopLeftRadius:5,borderBottomLeftRadius:5,width:10,height:60}}></View>
                         <TouchableOpacity 
                             style={{flexDirection: 'row',justifyContent: 'flex-start',alignItems:'center',width:0.85*w,height:60}}
-                             onPress={()=>this.props.navigation.navigate('PlanCategory')}>
+                             onPress={()=>this.props.navigation.navigate('PlanCategory',{PlanType: '远期计划'})}>
                             <Text>   远期计划</Text>
                         </TouchableOpacity>
               </View>  
               <View style={{backgroundColor:'white',flexDirection:'row', justifyContent: 'flex-start', alignItems: 'center',  width:0.88*w,height:60,marginLeft:0.06*w,marginBottom:0.06*w,borderTopRightRadius:5,borderBottomRightRadius:5,}}>
                         <View style={{backgroundColor:'#7ABFFD',borderTopLeftRadius:5,borderBottomLeftRadius:5,width:10,height:60}}></View>
-                        <TouchableOpacity style={{flexDirection: 'row',justifyContent: 'flex-start',alignItems:'center',width:0.85*w,height:60}}>
+                        <TouchableOpacity style={{flexDirection: 'row',justifyContent: 'flex-start',alignItems:'center',width:0.85*w,height:60}}
+                            onPress={()=>this.props.navigation.navigate('PlanCategory',{PlanType: '年度计划'})}>
                             <Text>   年度计划</Text>
                         </TouchableOpacity>
               </View>  
               <View style={{backgroundColor:'white',flexDirection:'row', justifyContent: 'flex-start', alignItems: 'center',  width:0.88*w,height:60,marginLeft:0.06*w,marginBottom:0.06*w,borderTopRightRadius:5,borderBottomRightRadius:5,}}>
                         <View style={{backgroundColor:'#92C34F',borderTopLeftRadius:5,borderBottomLeftRadius:5,width:10,height:60}}></View>
-                        <TouchableOpacity style={{flexDirection: 'row',justifyContent: 'flex-start',alignItems:'center',width:0.85*w,height:60}}>
+                        <TouchableOpacity style={{flexDirection: 'row',justifyContent: 'flex-start',alignItems:'center',width:0.85*w,height:60}}
+                            onPress={()=>this.props.navigation.navigate('ShowMonthPlanDetail')}>
                             <Text>   月度计划</Text>
                         </TouchableOpacity>
               </View>  

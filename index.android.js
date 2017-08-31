@@ -26,16 +26,10 @@ import {
 import PlanManage from './PlanManage';
 import PlanCategory from './PlanCategory';
 import Pla from './Pla';
-import ShowPlanItem from './ShowPlanItem';
-
-
-// import Search from './Search';
-// import Calc from './Calc';
-// import Category from './Category';
-// import ShowOption from './ShowOption';
-// import ShowKnowledge from './ShowKnowledge';
-// import editKnowLedge from './editKnowLedge';
-// import ShowSearchKnowLedge from './ShowSearchKnowLedge';
+import ShowPlan from './ShowPlan';
+import ShowChildPlan from './ShowChildPlan';
+import ShowYearChildPlan from './ShowYearChildPlan';
+import ShowMonthPlanDetail from './ShowMonthPlanDetail';
 
 
 var w=Dimensions.get('window').width;
@@ -136,7 +130,10 @@ const todoAPP = StackNavigator({
   PlanManage: { screen: PlanManage },
   PlanCategory: { screen: PlanCategory },
   Pla: { screen: Pla },
-  ShowPlanItem: { screen: ShowPlanItem },
+  ShowPlan: { screen: ShowPlan },
+  ShowChildPlan: { screen: ShowChildPlan },
+  ShowYearChildPlan: { screen: ShowYearChildPlan },
+  ShowMonthPlanDetail: { screen: ShowMonthPlanDetail },
   
 });
 

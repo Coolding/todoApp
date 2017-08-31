@@ -24,7 +24,7 @@ var h=Dimensions.get('window').height;  //获得屏幕的宽高
 
 
 
-export default class ShowPlanItem extends Component {
+export default class ShowPlan extends Component {
 
  constructor(props) {  
     super(props); 
@@ -41,9 +41,10 @@ export default class ShowPlanItem extends Component {
 componentWillMount() {
     const { params } = this.props.navigation.state;
     this.setState({CategoryName:params.Category})
-    let url="http://todoapp.applinzi.com/kdkibmyluifvjk/getLongPlanItems/";
+    let url="http://todoapp.applinzi.com/kdkibmyluifvjk/getPlans/";
     let formData=new FormData();        
     formData.append("Category",params.Category);  
+    formData.append("PlanType",params.PlanType);      
     fetch(url,{method:"POST",headers:{},body:formData}).then(response => response.json())
           .then(data =>{ 
              this.setState({PlanItem:data})
@@ -52,6 +53,15 @@ componentWillMount() {
   }
  
 
+ gotoShowChildPlans=(ParentPlanID)=>{
+   const { params } = this.props.navigation.state;
+   if(params.PlanType=='远期计划') 
+            this.props.navigation.navigate('ShowChildPlan',{ParentPlanID:ParentPlanID})
+   else if(params.PlanType=='年度计划') 
+            this.props.navigation.navigate('ShowYearChildPlan',{ParentPlanID:ParentPlanID})
+
+
+ }
 
 
   render() {
@@ -69,7 +79,7 @@ componentWillMount() {
                                     <View style={{backgroundColor:'#BEB3F7',borderTopLeftRadius:5,borderBottomLeftRadius:5,width:10,height:60}}></View>
                                     <TouchableOpacity 
                                         style={{flexDirection: 'row',justifyContent: 'flex-start',alignItems:'center',width:0.85*w,height:60}}
-                                         onPress={()=>this.props.navigation.navigate('ShowPlanItem',{Category: Item['category']})}>
+                                         onPress={()=>this.gotoShowChildPlans(Item['ID'])}>
                                         <Text>   {Item['Plan']}</Text>
                                     </TouchableOpacity>
                                 </View>  
