@@ -25,11 +25,13 @@ import {
 
 import PlanManage from './PlanManage';
 import PlanCategory from './PlanCategory';
-import Pla from './Pla';
+import RecentPlan from './RecentPlan';
 import ShowPlan from './ShowPlan';
 import ShowChildPlan from './ShowChildPlan';
 import ShowYearChildPlan from './ShowYearChildPlan';
 import ShowMonthPlanDetail from './ShowMonthPlanDetail';
+import TimeLine from './TimeLine';
+
 
 
 var w=Dimensions.get('window').width;
@@ -50,6 +52,8 @@ static navigationOptions = {
   };
 
 
+ 
+
   render() {
     return (
   <View style={{flex: 1}}>
@@ -62,7 +66,7 @@ static navigationOptions = {
             renderSelectedIcon={() => <Image source={require('./assets/12.png')} style={styles.iconStyle}/>}
             badgeText=""
             onPress={() => this.setState({ selectedTab: 'Browse' })}>    
-            <Pla {...this.props}  />
+            <RecentPlan {...this.props}  />
             </TabNavigator.Item>
 
 
@@ -76,7 +80,14 @@ static navigationOptions = {
             <PlanManage {...this.props}  />            
             </TabNavigator.Item>
  
-
+             <TabNavigator.Item                    
+            selected={this.state.selectedTab === 'Time'}
+            title="日志"
+            renderIcon={() => <Image source={require('./assets/3.png')} style={styles.iconStyle}/>}
+            renderSelectedIcon={() => <Image source={require('./assets/32.png')}  style={styles.iconStyle}/>}            
+            onPress={() => this.setState({ selectedTab: 'Time' })}>     
+            <TimeLine {...this.props}  />            
+            </TabNavigator.Item>
  
           </TabNavigator>
       </View>
@@ -129,7 +140,7 @@ const todoAPP = StackNavigator({
   HomeScreen: { screen: HomeScreen },
   PlanManage: { screen: PlanManage },
   PlanCategory: { screen: PlanCategory },
-  Pla: { screen: Pla },
+  RecentPlan: { screen: RecentPlan },
   ShowPlan: { screen: ShowPlan },
   ShowChildPlan: { screen: ShowChildPlan },
   ShowYearChildPlan: { screen: ShowYearChildPlan },
