@@ -49,27 +49,36 @@ export default class TimeLine extends Component {
            this.state.ExeLog.map(
                 (LogItem,index)=>{ 
                    return(
-                        <View key={index} style={{flexDirection:'row',height:75}}>
+                        <View key={index} style={{flexDirection:'row',height:105}}>
                         <View style={{marginLeft:10}}>
                             <Text></Text>
                                 <Text style={{textAlign:'right',fontSize:16}}>{LogItem['RecordTime'].substring(8,10)} </Text>
                                 <Text style={{textAlign:'right',fontSize:13}}>{LogItem['RecordTime'].substring(0,7)}</Text>
                         </View>
                             <View>
-                                <Image source={require('./imgs/ic_order_shu.png')} style={{height:20,marginLeft:25,flex:1}}/>
-                                <Image source={require('./imgs/ic_order_status_tijiao.png')} style={{width:30,height:30,marginLeft:10}}/>
-                                <Image source={require('./imgs/ic_order_shu.png')} style={{height:20,marginLeft:25,flex:1}}/>
+                                <Image source={require('./imgs/ic_order_shu.png')} style={{height:33,marginLeft:25,flex:1}}/>
+                               <View    style={{backgroundColor:"#AFB341",justifyContent: 'center',alignItems: 'center',marginLeft:21,height:8,width:8, borderColor: '#AFB341', borderWidth:1,borderRadius:4}}>
+                                                     <View    style={{backgroundColor:"white",height:4,width:4, borderColor: '#white', borderWidth:0,borderRadius:2}}>
+                                                      </View>
+                                </View>
+                                <Image source={require('./imgs/ic_order_shu.png')} style={{height:33,marginLeft:25,flex:1}}/>
                             </View>
-                                <View style={{height:5}}/>
-                                        <View style={{backgroundColor:"white",height:65,marginLeft:5,width:(w-110),borderRadius:5}}>
-                                            <Text style={{marginLeft:5}}>{LogItem['ChildPlan']}</Text>
+                                <View style={{height:15}}/>
+                                        <View style={{backgroundColor:"white",height:75,marginLeft:5,width:(w-110),borderRadius:8}}>
+                                            <View style={{flexDirection: 'row',justifyContent: 'space-between',alignItems: 'center',width:(w-110)}}>
+                                                <View style={{width:w-170}}><Text style={{marginLeft:5,lineHeight:25}}>{LogItem['Plan']}{LogItem['ChildPlan']?(":"+LogItem['ChildPlan']):""}</Text></View>
+                                                <View style={{width:70,marginRight:5}}><Text  style={{lineHeight:20}}>{LogItem['CostTime']}分钟</Text></View>
+                                            </View>
+                                            <Text style={{marginLeft:5,color:"#A0A0A0",lineHeight:25}}>{LogItem['progress']}</Text>
                                         </View>
-                                <View style={{height:5}}/>    
+                                <View style={{height:15}}/>    
                         </View>
                    )}
            )
    }
      </ScrollView>
+
+                                                 
     </View>
     )
   }

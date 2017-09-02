@@ -691,6 +691,11 @@ left join ChildPlan cp
 on p.ID=cp.higherID
 where p.ID=12
 注意on和where的顺序
+如果有三个表，要这么写
+SELECT * FROM Plan p1,Plan2 p2   要进行左连接的表要写在后面，即Plan p1和Plan2 p2不能调换位置
+left join ChildPlan cp 
+on p2.ID=cp.higherID
+where p1.ID=12
 
 4.中文字段排序
 在处理使用MySQL时，数据表采用utf8字符集，使用中发现中文不能直接按照拼音排序 

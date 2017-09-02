@@ -47,7 +47,8 @@ componentWillMount() {
     formData.append("ChildID",params.ChildID); 
     formData.append("ID",params.ID); 
     formData.append("PlanCostTime",this.state.PlanCostTime); 
-    formData.append("PlanExeInfo",this.state.PlanExeInfo);     
+    formData.append("PlanExeInfo",this.state.PlanExeInfo);  
+
     fetch(url,{method:"POST",headers:{},body:formData}).then(response => response)
           .then(data =>{ 
 
@@ -84,9 +85,9 @@ componentWillMount() {
                         />
                </View>  
                <TouchableOpacity   
-                    style={{alignSelf:'center',width:30,height:22,backgroundColor:"#12B7F5",marginTop:10}}            
+                    style={{alignSelf:'center',justifyContent: 'center',width:60,height:35,backgroundColor:"#12B7F5",marginTop:10,borderRadius:5}}            
                     onPress={()=>this.record()}>
-                    <Text style={styles.leftitle}>提交  </Text> 
+                        <Text style={{color:'white',textAlign:'center'}}>提交</Text> 
               </TouchableOpacity>
      </View>  
           
