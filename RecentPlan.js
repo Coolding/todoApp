@@ -51,7 +51,10 @@ componentWillMount() {
       })
  }
  
+gotoRecordExeInfo=()=>{
 
+
+}
   render() {
     return (
      
@@ -65,7 +68,7 @@ componentWillMount() {
                     <Text style={styles.leftitle}>刷新  </Text> 
               </TouchableOpacity>
             </View>  
-            <Text style={{alignSelf: 'center',fontSize: 17,marginBottom:10}}>显示{PlanCount}条计划中的3条！  </Text> 
+            <Text style={{alignSelf: 'center',fontSize: 17,marginBottom:10}}>显示{PlanCount}条计划中的{Math.min(PlanCount,3)}条</Text> 
          <ScrollView>
              {
                 PlanItem.map(
@@ -75,7 +78,7 @@ componentWillMount() {
                                     <View style={{backgroundColor:'#BEB3F7',borderTopLeftRadius:5,borderBottomLeftRadius:5,width:10,height:60}}></View>
                                     <TouchableOpacity 
                                         style={{flexDirection: 'row',justifyContent: 'flex-start',alignItems:'center',width:0.85*w,height:60}}
-                                         onPress={()=>alert('ok')}>
+                                         onPress={()=>this.props.navigation.navigate('RecordPlanExeInfo',{ID:Item['ID'],ChildID:Item['ChildID']})}>
                                         <Text style={{width:0.68*w,marginLeft:5}}>{Item['Plan']}：{Item['ChildPlan']}</Text>
                                     </TouchableOpacity>
                                     

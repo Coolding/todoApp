@@ -14,23 +14,20 @@ import {
   Image,
   TouchableOpacity,
   Dimensions,
-  ScrollView,
+  ScrollView
 } from 'react-native';
  
-//显示长期计划下的计划类别
-
+//本文件作用：显示每日计划，可以打卡
 var w=Dimensions.get('window').width;
 var h=Dimensions.get('window').height;  //获得屏幕的宽高
+var PlanItem=[];
+var PlanCount=0
 
 
-
-export default class PlanCategory extends Component {
-
- constructor(props) {  
+export default class EveryDayPlan extends Component {
+  constructor(props) {  
     super(props); 
      this.state = {
-       CategoryInfo:[],
-       PlanType:''
     }; 
   }  
 
@@ -39,51 +36,62 @@ export default class PlanCategory extends Component {
   };
 
 componentWillMount() {
-    const { params } = this.props.navigation.state;
-    this.setState({PlanType:params.PlanType})  
-   
+      this.update()
+  }
  
-        let url="http://todoapp.applinzi.com/dldlleuxxxee/getPlanCategoryInfo/";
-        let formData=new FormData();        
-        formData.append("PlanType",params.PlanType); 
-        fetch(url,{method:"POST",headers:{},body:formData}).then(response => response.json())
-        .then(data =>{          
-            this.setState({CategoryInfo:data})  
-       })
-    
-}
 
-
+ update=()=>{
+      let url="http://todoapp.applinzi.com/oiuqerjlauvlznwtruo/ShowEveryDayPlanDetail/";
+      let formData=new FormData();        
+      fetch(url,{method:"GET",headers:{}}).then(response => response.json())
+      .then(data =>{          
+      PlanItem=data.slice(0,3);   //最多只显示三条近期计划，以利于集中火力！
+      PlanCount=data.length
+      this.forceUpdate();
+      })
+ }
+ 
 
   render() {
     return (
+     
        <View  style={styles.container}>  
             <View style={styles.header}>  
-                  <Text style={styles.headtitle}>{this.state.PlanType}</Text> 
+                  <Text style={styles.leftitle}>    </Text>
+                  <Text style={styles.headtitle}>近期计划</Text> 
+                   <TouchableOpacity   
+                    style={{alignSelf:'center',}}            
+                    onPress={()=>this.update()}>
+                    <Text style={styles.leftitle}>刷新  </Text> 
+              </TouchableOpacity>
             </View>  
-            <ScrollView style={{width:w}}>
-            {
-                this.state.CategoryInfo.map(
-                      (CategoryName,index)=>{ 
+            <Text style={{alignSelf: 'center',fontSize: 17,marginBottom:10}}>显示{PlanCount}条计划中的{Math.min(PlanCount,3)}条！  </Text> 
+         <ScrollView>
+             {
+                PlanItem.map(
+                      (Item,index)=>{ 
                           return(
                                 <View key={index} style={{backgroundColor:'white',flexDirection:'row', justifyContent: 'flex-start', alignItems: 'center',  width:0.88*w,height:60,marginLeft:0.06*w,marginBottom:0.06*w,borderTopRightRadius:5,borderBottomRightRadius:5,}}>
                                     <View style={{backgroundColor:'#BEB3F7',borderTopLeftRadius:5,borderBottomLeftRadius:5,width:10,height:60}}></View>
                                     <TouchableOpacity 
                                         style={{flexDirection: 'row',justifyContent: 'flex-start',alignItems:'center',width:0.85*w,height:60}}
-                                         onPress={()=>this.props.navigation.navigate('ShowPlan',{Category: CategoryName['category'],PlanType:this.state.PlanType})}>
-                                        <Text>   {CategoryName['category']}     {CategoryName['数量']}</Text>
+                                         onPress={()=>alert('ok')}>
+                                        <Text style={{width:0.68*w,marginLeft:5}}>{Item['Plan']}：{Item['ChildPlan']}</Text>
                                     </TouchableOpacity>
+                                    
                                 </View>  
                           )
                       }
                 )
             }
             </ScrollView>
-       </View>   
+        </View>
+ 
      
     );
   }
 }
+
 
 
 const styles = StyleSheet.create({
@@ -99,7 +107,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: 40, 
     backgroundColor: '#12B7F5', 
-    justifyContent: 'center', 
+    justifyContent: 'space-between', 
     width:w,
     marginBottom:w*0.06,
 }, 
@@ -109,6 +117,10 @@ headtitle: {
     alignSelf: 'center', 
     fontSize: 20, 
     color: '#FFFFFF', 
+}, leftitle: { 
+    alignSelf: 'center', 
+    fontSize: 20, 
+    color: '#ffffff', 
 }, 
 });
 

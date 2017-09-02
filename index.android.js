@@ -31,6 +31,12 @@ import ShowChildPlan from './ShowChildPlan';
 import ShowYearChildPlan from './ShowYearChildPlan';
 import ShowMonthPlanDetail from './ShowMonthPlanDetail';
 import TimeLine from './TimeLine';
+import ChildPlanEdit from './ChildPlanEdit';
+import EveryDayPlan from './EveryDayPlan';
+import RecordPlanExeInfo from './RecordPlanExeInfo';
+
+
+
 
 
 
@@ -61,7 +67,7 @@ static navigationOptions = {
 
             <TabNavigator.Item
             selected={this.state.selectedTab === 'Browse'}
-            title="浏览"
+            title="近期"
             renderIcon={() => <Image source={require('./assets/1.png')} style={styles.iconStyle}/>}
             renderSelectedIcon={() => <Image source={require('./assets/12.png')} style={styles.iconStyle}/>}
             badgeText=""
@@ -69,13 +75,22 @@ static navigationOptions = {
             <RecentPlan {...this.props}  />
             </TabNavigator.Item>
 
-
+            <TabNavigator.Item
+            selected={this.state.selectedTab === 'EveryDay'}
+            title="打卡"
+            renderIcon={() => <Image source={require('./assets/2.png')} style={styles.iconStyle}/>}
+            renderSelectedIcon={() => <Image source={require('./assets/22.png')} style={styles.iconStyle}/>}
+            badgeText=""
+            onPress={() => this.setState({ selectedTab: 'EveryDay' })}>    
+            <EveryDayPlan {...this.props}  />
+            </TabNavigator.Item>
+            
             
             <TabNavigator.Item                    
             selected={this.state.selectedTab === 'Search'}
             title="计划管理"
-            renderIcon={() => <Image source={require('./assets/2.png')} style={styles.iconStyle}/>}
-            renderSelectedIcon={() => <Image source={require('./assets/22.png')}  style={styles.iconStyle}/>}            
+            renderIcon={() => <Image source={require('./assets/3.png')} style={styles.iconStyle}/>}
+            renderSelectedIcon={() => <Image source={require('./assets/32.png')}  style={styles.iconStyle}/>}            
             onPress={() => this.setState({ selectedTab: 'Search' })}>     
             <PlanManage {...this.props}  />            
             </TabNavigator.Item>
@@ -83,8 +98,8 @@ static navigationOptions = {
              <TabNavigator.Item                    
             selected={this.state.selectedTab === 'Time'}
             title="日志"
-            renderIcon={() => <Image source={require('./assets/3.png')} style={styles.iconStyle}/>}
-            renderSelectedIcon={() => <Image source={require('./assets/32.png')}  style={styles.iconStyle}/>}            
+            renderIcon={() => <Image source={require('./assets/4.png')} style={styles.iconStyle}/>}
+            renderSelectedIcon={() => <Image source={require('./assets/42.png')}  style={styles.iconStyle}/>}            
             onPress={() => this.setState({ selectedTab: 'Time' })}>     
             <TimeLine {...this.props}  />            
             </TabNavigator.Item>
@@ -145,7 +160,9 @@ const todoAPP = StackNavigator({
   ShowChildPlan: { screen: ShowChildPlan },
   ShowYearChildPlan: { screen: ShowYearChildPlan },
   ShowMonthPlanDetail: { screen: ShowMonthPlanDetail },
-  
+  ChildPlanEdit: { screen: ChildPlanEdit },
+  EveryDayPlan: { screen: EveryDayPlan },
+  RecordPlanExeInfo: { screen: RecordPlanExeInfo },
 });
 
 AppRegistry.registerComponent('todoAPP', () => todoAPP);

@@ -52,8 +52,8 @@ export default class TimeLine extends Component {
                         <View key={index} style={{flexDirection:'row',height:75}}>
                         <View style={{marginLeft:10}}>
                             <Text></Text>
-                                <Text style={{textAlign:'right',fontSize:16}}>{LogItem['ExeEndTime'].substring(8,10)} </Text>
-                                <Text style={{textAlign:'right',fontSize:13}}>{LogItem['ExeEndTime'].substring(0,7)}</Text>
+                                <Text style={{textAlign:'right',fontSize:16}}>{LogItem['RecordTime'].substring(8,10)} </Text>
+                                <Text style={{textAlign:'right',fontSize:13}}>{LogItem['RecordTime'].substring(0,7)}</Text>
                         </View>
                             <View>
                                 <Image source={require('./imgs/ic_order_shu.png')} style={{height:20,marginLeft:25,flex:1}}/>

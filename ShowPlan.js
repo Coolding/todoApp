@@ -70,7 +70,7 @@ componentWillMount() {
             <View style={styles.header}>  
                   <Text style={styles.headtitle}>{this.state.CategoryName}</Text> 
             </View>  
-            <ScrollView>
+            <ScrollView  style={{width:w}}>
              {
                 this.state.PlanItem.map(
                       (Item,index)=>{ 

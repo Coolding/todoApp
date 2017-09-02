@@ -1,5 +1,18 @@
 ﻿Raact-Native 定位APP开发总结
 
+
+根据不同的条件，不同的情况显示不同的组件或界面
+renderItem() {
+    if(1>0){
+       return ( <Text>1大于0</Text>);
+    }else if(1<0){
+       return (<Text>1小于0</Text>);
+    }else{
+       return (<Text>1等于0</Text>);
+    }
+  } 
+
+  然后在render里面调用 {this.renderItem()}就可以了
 ************************************************************************************************
 使用yarn安装依赖：npm install -g yarn
 
@@ -570,9 +583,24 @@ readStor =() => {
   })
 }
 
-  
+ =======================================================================================================================
+ python 返回json数据
+ Python自带的json.dumps方法序列化数据时候如果格式化的数据中有datetime类型数据时候会提示错误TypeError:
+  datetime.datetime(2012, 12, 12, 15, 47, 15) is not JSON serializable
 
-
+解决方法：增加一个函数
+class CJsonEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, datetime.datetime):
+            return obj.strftime('%Y-%m-%d %H:%M:%S')
+        elif isinstance(obj, date):
+            return obj.strftime("%Y-%m-%d")
+        else:
+            return json.JSONEncoder.default(self, obj)
+然后在要返回数据的时候这么写：
+return json.dumps(results,cls=CJsonEncoder)
+但是注意，碰到过使用Mysql数据库的，把字段设置为Date类型，结果怎么样写都出错，无法正确返回results
+方法：把Date类型改为DateTime类型
 
 
 
@@ -663,5 +691,16 @@ left join ChildPlan cp
 on p.ID=cp.higherID
 where p.ID=12
 注意on和where的顺序
+
+4.中文字段排序
+在处理使用MySQL时，数据表采用utf8字符集，使用中发现中文不能直接按照拼音排序 
+
+如果数据表tbl的某字段name的字符编码是latin1_swedish_ci
+
+select * from `tbl` order by birary(name) asc ;
+
+如果数据表tbl的某字段name的字符编码是utf8_general_ci
+
+SELECT name FROM `tbl` WHERE 1 ORDER BY CONVERT( name USING gbk ) COLLATE gbk_chinese_ci ASC
 
 ×××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××××
