@@ -15,7 +15,8 @@ import {
   TouchableOpacity,
   Dimensions,
   ScrollView,
-  Switch
+  Switch,
+  TextInput
 } from 'react-native';
  
 //本文件作用：显示长期任务下每一个目标任务的目标，方法，各项子目标等详细内容
@@ -25,7 +26,7 @@ var h=Dimensions.get('window').height;  //获得屏幕的宽高
 var PlanDetail=[]
 var ChildPlanCount=0
 
-export default class ShowChildPlan extends Component {
+export default class ShowPlanInfo extends Component {
 
  constructor(props) {  
     super(props); 
@@ -129,6 +130,21 @@ componentWillMount() {
 
   }
  
+ //修改计划相关信息：计划内容，目标，方法
+
+ modifyPlan=()=>{
+    let url="http://todoapp.applinzi.com/zjclqauotlncvljqoud/modifyPlan/";
+    let formData=new FormData();      
+    formData.append("target",this.state.target); 
+    formData.append("method",this.state.method); 
+    formData.append("ParentPlan",this.state.ParentPlan); 
+    formData.append("ParentID",this.state.ParentID);     
+    fetch(url,{method:"POST",headers:{},body:formData}).then(response => response)
+          .then(data =>{  alert("修改成功")   }
+          )
+
+
+ }
 renderChildPlan() {
     if(ChildPlanCount>0){    //有子计划，则逐条显示  
         ChildPlanCount=0
@@ -147,29 +163,61 @@ renderChildPlan() {
                                 </View>  
                           )
                       }
-        ))
+        )
+        (
+           
+        )
+        )
         
     }else{    //没有子计划，则不显示
-        
+         
     }
   } 
 
   render() {
     return (
        <View  style={styles.container}>  
-            <View style={styles.header}>  
-                  <Text style={styles.headtitle}>长期：{this.state.ParentPlan}</Text> 
+             <View style={styles.header}>  
+                   <Text style={styles.leftitle}>     </Text>
+                  <Text style={styles.headtitle}>计划浏览</Text> 
+                   <TouchableOpacity   
+                    style={{alignSelf:'center',}}            
+                    onPress={()=>this.props.navigation.navigate('AddPlan')}>
+                          <Text style={styles.leftitle}>编辑  </Text> 
+                    </TouchableOpacity>
             </View>  
+
+
             <View style={{backgroundColor: '#FAFFFF',justifyContent: 'center',width:w,marginBottom:2 }}>  
                     <View style={{height:10}}/> 
-                   <Text style={{marginLeft:10,marginRight:10,lineHeight:25}}>目标：{this.state.target}</Text>
+                   <TextInput style={{marginLeft:10,marginRight:10,lineHeight:25}}
+                              underlineColorAndroid="transparent"
+                              multiline ={true}
+                              onChangeText={(text) =>   this.setState({ParentPlan:text.substring(3)})  }
+                   >任务：{this.state.ParentPlan}</TextInput>
                    <View style={{height:10}}/> 
             </View>  
-            <View style={{backgroundColor: '#FAFFFF',justifyContent: 'center',width:w,marginBottom:w*0.06,}}> 
+            <View style={{backgroundColor: '#FAFFFF',justifyContent: 'flex-start',width:w,marginBottom:2 }}>  
                     <View style={{height:10}}/> 
-                   <Text  style={{marginLeft:10,marginRight:10,lineHeight:25}}>方法：{this.state.method}</Text>
+                   <TextInput style={{marginLeft:10,marginRight:10,lineHeight:25,textAlignVertical:'bottom'}}
+                              underlineColorAndroid="transparent"
+                              multiline ={true}
+                              numberOfLines={ Math.ceil(this.state.target.length/20)}
+                              onChangeText={(text) =>   this.setState({target:text.substring(3)})  }
+                   >目标：{this.state.target}</TextInput>
                    <View style={{height:10}}/> 
             </View>  
+            <View style={{backgroundColor: '#FAFFFF',justifyContent: 'flex-start',width:w,marginBottom:2 }}>  
+                    <View style={{height:10}}/> 
+                   <TextInput style={{marginLeft:10,marginRight:10,lineHeight:25,textAlignVertical:'top'}}
+                              underlineColorAndroid="transparent"
+                              multiline ={true}
+                              onChangeText={(text) =>   this.setState({method:text.substring(3)})  }
+                   >方法：{this.state.method}</TextInput>
+                   <View style={{height:10}}/> 
+            </View> 
+
+
             <View style={{flexDirection: 'row',justifyContent: 'flex-start',alignItems: 'center',}}>
               <Text>  年度 </Text>
               <Switch
@@ -196,8 +244,25 @@ renderChildPlan() {
             <ScrollView>
              {
                 this.renderChildPlan()
+                
             }
+            <View style={{ flexDirection: 'row',alignSelf:'center',justifyContent: 'center',width:w}}>
+
+            <TouchableOpacity   
+                    style={{alignSelf:'center',justifyContent: 'center',width:80,height:35,backgroundColor:"#12B7F5",marginTop:10,borderRadius:5}}            
+                    onPress={()=>this.modifyPlan()}>
+                        <Text style={{color:'white',textAlign:'center'}}>保存修改</Text> 
+           </TouchableOpacity>
+           <View style={{ width:80}}/>
+             <TouchableOpacity   
+                    style={{alignSelf:'center',justifyContent: 'center',width:80,height:35,backgroundColor:"#12B7F5",marginTop:10,borderRadius:5}}            
+                    onPress={()=>this.AddChildPlan()}>
+                        <Text style={{color:'white',textAlign:'center'}}>添加子计划</Text> 
+           </TouchableOpacity>
+           </View>
             </ScrollView>
+
+            
        </View>   
      
     );
@@ -218,16 +283,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: 40, 
     backgroundColor: '#12B7F5', 
-    justifyContent: 'center', 
+    justifyContent: 'space-between', 
     width:w,
     
-}, 
- 
+},  
 headtitle: { 
     textAlign:'center',
     alignSelf: 'center', 
     fontSize: 20, 
     color: '#FFFFFF', 
 }, 
+leftitle: { 
+    alignSelf: 'center', 
+    fontSize: 20, 
+    color: '#ffffff', 
+}
 });
 

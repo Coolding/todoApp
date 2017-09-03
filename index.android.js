@@ -23,17 +23,21 @@ import {
   StackNavigator,
 } from 'react-navigation';
 
-import PlanManage from './PlanManage';
-import PlanCategory from './PlanCategory';
+//import PlanManage from './PlanManage';
+//import PlanCategory from './PlanCategory';
 import RecentPlan from './RecentPlan';
 import ShowPlan from './ShowPlan';
-import ShowChildPlan from './ShowChildPlan';
-import ShowYearChildPlan from './ShowYearChildPlan';
+import ShowPlanInfo from './ShowPlanInfo';
+//import ShowYearChildPlan from './ShowYearChildPlan';
 import ShowMonthPlanDetail from './ShowMonthPlanDetail';
 import TimeLine from './TimeLine';
 import ChildPlanEdit from './ChildPlanEdit';
 import EveryDayPlan from './EveryDayPlan';
 import RecordPlanExeInfo from './RecordPlanExeInfo';
+import PlanMain from './PlanMain';
+import AddPlan from './AddPlan';
+
+
 
 
 
@@ -49,7 +53,7 @@ export default class HomeScreen extends Component {
   constructor(props) {  
     super(props); 
      this.state = {
-      selectedTab:'Browse',
+      selectedTab:'PlanMain',
     };   
   }  
 
@@ -87,12 +91,12 @@ static navigationOptions = {
             
             
             <TabNavigator.Item                    
-            selected={this.state.selectedTab === 'Search'}
+            selected={this.state.selectedTab === 'PlanMain'}
             title="计划管理"
             renderIcon={() => <Image source={require('./assets/3.png')} style={styles.iconStyle}/>}
             renderSelectedIcon={() => <Image source={require('./assets/32.png')}  style={styles.iconStyle}/>}            
-            onPress={() => this.setState({ selectedTab: 'Search' })}>     
-            <PlanManage {...this.props}  />            
+            onPress={() => this.setState({ selectedTab: 'PlanMain' })}>     
+            <PlanMain {...this.props}  />            
             </TabNavigator.Item>
  
              <TabNavigator.Item                    
@@ -153,16 +157,18 @@ const styles = StyleSheet.create({
 
 const todoAPP = StackNavigator({
   HomeScreen: { screen: HomeScreen },
-  PlanManage: { screen: PlanManage },
-  PlanCategory: { screen: PlanCategory },
+  //PlanManage: { screen: PlanManage },
+  //PlanCategory: { screen: PlanCategory },
   RecentPlan: { screen: RecentPlan },
   ShowPlan: { screen: ShowPlan },
-  ShowChildPlan: { screen: ShowChildPlan },
-  ShowYearChildPlan: { screen: ShowYearChildPlan },
+  ShowPlanInfo: { screen: ShowPlanInfo },
+  //ShowYearChildPlan: { screen: ShowYearChildPlan },
   ShowMonthPlanDetail: { screen: ShowMonthPlanDetail },
   ChildPlanEdit: { screen: ChildPlanEdit },
   EveryDayPlan: { screen: EveryDayPlan },
   RecordPlanExeInfo: { screen: RecordPlanExeInfo },
+  PlanMain: { screen: PlanMain },
+  AddPlan: { screen: AddPlan },
 });
 
 AppRegistry.registerComponent('todoAPP', () => todoAPP);

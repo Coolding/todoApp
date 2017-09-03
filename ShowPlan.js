@@ -63,16 +63,13 @@ componentWillMount() {
 
  }
 
-
-  render() {
-    return (
-       <View  style={styles.container}>  
-            <View style={styles.header}>  
-                  <Text style={styles.headtitle}>{this.state.CategoryName}</Text> 
-            </View>  
-            <ScrollView  style={{width:w}}>
-             {
-                this.state.PlanItem.map(
+//如果是远期计划，不显示类别名称
+//如果是年度，月度计划，显示类别名称+计划内容
+showPlans=()=>{
+   const { params } = this.props.navigation.state;
+   if(params.PlanType=='远期计划') 
+            return (
+                 this.state.PlanItem.map(
                       (Item,index)=>{ 
                           return(
                                 <View key={index} style={{backgroundColor:'white',flexDirection:'row', justifyContent: 'flex-start', alignItems: 'center',  width:0.88*w,height:60,marginLeft:0.06*w,marginBottom:0.06*w,borderTopRightRadius:5,borderBottomRightRadius:5,}}>
@@ -86,6 +83,36 @@ componentWillMount() {
                           )
                       }
                 )
+            )
+   else if(params.PlanType=='年度计划' || params.PlanType=='月度计划' ) 
+            return (
+                 this.state.PlanItem.map(
+                      (Item,index)=>{ 
+                          return(
+                                <View key={index} style={{backgroundColor:'white',flexDirection:'row', justifyContent: 'flex-start', alignItems: 'center',  width:0.88*w,height:60,marginLeft:0.06*w,marginBottom:0.06*w,borderTopRightRadius:5,borderBottomRightRadius:5,}}>
+                                    <View style={{backgroundColor:'#BEB3F7',borderTopLeftRadius:5,borderBottomLeftRadius:5,width:10,height:60}}></View>
+                                    <TouchableOpacity 
+                                        style={{flexDirection: 'row',justifyContent: 'flex-start',alignItems:'center',width:0.85*w,height:60}}
+                                         onPress={()=>this.gotoShowChildPlans(Item['ID'])}>
+                                        <Text>   {Item['category']}：{Item['Plan']}</Text>
+                                    </TouchableOpacity>
+                                </View>  
+                          )
+                      }
+                )
+            )
+    
+
+}
+  render() {
+    return (
+       <View  style={styles.container}>  
+            <View style={styles.header}>  
+                  <Text style={styles.headtitle}>{this.state.CategoryName}</Text> 
+            </View>  
+            <ScrollView  style={{width:w}}>
+             {
+                this.showPlans()
             }
             </ScrollView>
        </View>   

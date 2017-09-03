@@ -65,8 +65,8 @@ gotoRecordExeInfo=()=>{
                    <TouchableOpacity   
                     style={{alignSelf:'center',}}            
                     onPress={()=>this.update()}>
-                    <Text style={styles.leftitle}>刷新  </Text> 
-              </TouchableOpacity>
+                          <Text style={styles.leftitle}>刷新  </Text> 
+                    </TouchableOpacity>
             </View>  
             <Text style={{alignSelf: 'center',fontSize: 17,marginBottom:10}}>显示{PlanCount}条计划中的{Math.min(PlanCount,3)}条</Text> 
          <ScrollView>
@@ -79,7 +79,7 @@ gotoRecordExeInfo=()=>{
                                     <TouchableOpacity 
                                         style={{flexDirection: 'row',justifyContent: 'flex-start',alignItems:'center',width:0.85*w,height:60}}
                                          onPress={()=>this.props.navigation.navigate('RecordPlanExeInfo',{ID:Item['ID'],ChildID:Item['ChildID']})}>
-                                        <Text style={{width:0.68*w,marginLeft:5}}>{Item['Plan']}：{Item['ChildPlan']}</Text>
+                                        <Text style={{width:0.68*w,marginLeft:5,lineHeight:25,}}>{Item['Plan']}：{Item['ChildPlan']}</Text>
                                     </TouchableOpacity>
                                     
                                 </View>  

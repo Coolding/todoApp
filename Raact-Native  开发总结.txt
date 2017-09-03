@@ -50,6 +50,21 @@ this.props.navigation.goBack(); 回到上一页
 
 
 ************************************************************************************************
+日期选择器
+ <View>
+                <Button title='预计完成时间：' onPress={()=>{
+                    DatePickerAndroid.open(
+
+                    ).then(({action,  year, month, day})=>{
+                        if(action !== DatePickerAndroid.dismissedAction){
+                            alert(year+'-'+(month+1)+'-'+day);
+                        }
+                    })
+                }}/>
+            </View>
+
+************************************************************************************************
+
 声明全局变量
 声明：
 global.a = 1;
@@ -602,7 +617,23 @@ return json.dumps(results,cls=CJsonEncoder)
 但是注意，碰到过使用Mysql数据库的，把字段设置为Date类型，结果怎么样写都出错，无法正确返回results
 方法：把Date类型改为DateTime类型
 
+ =======================================================================================================================
+ 下拉选择器
 
+<Picker
+                //Picker样式 dialog弹窗样式默认  dropdown显示在下边
+                //mode = {'dropdown'}
+                //显示选择内容
+                selectedValue={this.state.PlanTypeSelected}
+                //选择内容时调用此方法
+                onValueChange={(value)=>this.setState({PlanTypeSelected: value})}
+                //设置Title 当设置为dialog时有用
+                prompt={'请选择'} >
+                <Picker.Item label='远期计划' value='android'/>
+                <Picker.Item label='年度计划' value='ios'/>
+                <Picker.Item label='月度计划' value='reactnative'/>
+                <Picker.Item label='每日计划' value='reactnative'/>
+            </Picker>
 
 
 

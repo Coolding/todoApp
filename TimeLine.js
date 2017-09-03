@@ -58,7 +58,7 @@ export default class TimeLine extends Component {
                             <View>
                                 <Image source={require('./imgs/ic_order_shu.png')} style={{height:33,marginLeft:25,flex:1}}/>
                                <View    style={{backgroundColor:"#AFB341",justifyContent: 'center',alignItems: 'center',marginLeft:21,height:8,width:8, borderColor: '#AFB341', borderWidth:1,borderRadius:4}}>
-                                                     <View    style={{backgroundColor:"white",height:4,width:4, borderColor: '#white', borderWidth:0,borderRadius:2}}>
+                                                     <View    style={{backgroundColor:"white",height:4,width:4, borderColor: 'white', borderWidth:0,borderRadius:2}}>
                                                       </View>
                                 </View>
                                 <Image source={require('./imgs/ic_order_shu.png')} style={{height:33,marginLeft:25,flex:1}}/>
@@ -67,7 +67,7 @@ export default class TimeLine extends Component {
                                         <View style={{backgroundColor:"white",height:75,marginLeft:5,width:(w-110),borderRadius:8}}>
                                             <View style={{flexDirection: 'row',justifyContent: 'space-between',alignItems: 'center',width:(w-110)}}>
                                                 <View style={{width:w-170}}><Text style={{marginLeft:5,lineHeight:25}}>{LogItem['Plan']}{LogItem['ChildPlan']?(":"+LogItem['ChildPlan']):""}</Text></View>
-                                                <View style={{width:70,marginRight:5}}><Text  style={{lineHeight:20}}>{LogItem['CostTime']}分钟</Text></View>
+                                                <View style={{width:70,marginRight:5}}><Text  style={{lineHeight:25}}>{LogItem['CostTime']}分钟</Text></View>
                                             </View>
                                             <Text style={{marginLeft:5,color:"#A0A0A0",lineHeight:25}}>{LogItem['progress']}</Text>
                                         </View>

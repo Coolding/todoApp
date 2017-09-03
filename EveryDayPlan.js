@@ -58,7 +58,7 @@ componentWillMount() {
        <View  style={styles.container}>  
             <View style={styles.header}>  
                   <Text style={styles.leftitle}>    </Text>
-                  <Text style={styles.headtitle}>近期计划</Text> 
+                  <Text style={styles.headtitle}>每日计划</Text> 
                    <TouchableOpacity   
                     style={{alignSelf:'center',}}            
                     onPress={()=>this.update()}>
@@ -76,7 +76,10 @@ componentWillMount() {
                                     <TouchableOpacity 
                                         style={{flexDirection: 'row',justifyContent: 'flex-start',alignItems:'center',width:0.85*w,height:60}}
                                          onPress={()=>alert('ok')}>
-                                        <Text style={{width:0.68*w,marginLeft:5}}>{Item['Plan']}：{Item['ChildPlan']}</Text>
+                                         <View    style={{backgroundColor:"#BEB3F7",justifyContent: 'center',alignItems: 'center',marginLeft:w*0.02,height:26,width:26, borderColor: '#BEB3F7', borderWidth:1,borderRadius:13}}>                                      
+                                                    <Text style={{color:"white",}}>{Item['打卡次数']}</Text>
+                                          </View> 
+                                        <Text style={{width:0.68*w,marginLeft:5}}> {Item['Plan']}：{Item['ChildPlan']}</Text>
                                     </TouchableOpacity>
                                     
                                 </View>  

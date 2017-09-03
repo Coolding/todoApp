@@ -51,17 +51,24 @@ componentWillMount() {
 
     fetch(url,{method:"POST",headers:{},body:formData}).then(response => response)
           .then(data =>{ 
-
+              this.props.navigation.goBack();
           })
 
   }
 
+  
 
     render() {
     return (
          <View>
           <View style={styles.header}>  
-                    <Text style={styles.headtitle}>记录计划执行情况</Text> 
+                    <Text style={styles.leftitle}>    </Text>
+                    <Text style={styles.headtitle}>执行情况记录</Text> 
+                    <TouchableOpacity   
+                    style={{alignSelf:'center',}}            
+                    onPress={()=>alert('ok')}>
+                          <Text style={styles.leftitle}>编辑  </Text> 
+                    </TouchableOpacity>
               </View>  
 
               <View  style={{width:w*0.98,marginTop:10,height:40,flexDirection: 'row',alignItems:'flex-start',marginBottom:10}} >
@@ -89,6 +96,7 @@ componentWillMount() {
                     onPress={()=>this.record()}>
                         <Text style={{color:'white',textAlign:'center'}}>提交</Text> 
               </TouchableOpacity>
+             
      </View>  
           
     )}
@@ -127,7 +135,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: 40, 
     backgroundColor: '#12B7F5', 
-    justifyContent: 'center', 
+    justifyContent: 'space-between', 
     width:w
 }, 
 headtitle: { 
@@ -136,4 +144,9 @@ headtitle: {
     fontSize: 20, 
     color: '#FFFFFF', 
 },  
+leftitle: { 
+    alignSelf: 'center', 
+    fontSize: 20, 
+    color: '#ffffff', 
+}
 })

@@ -46,7 +46,7 @@ export default class PlanManage extends Component {
               <View style={{backgroundColor:'white',flexDirection:'row', justifyContent: 'flex-start', alignItems: 'center',  width:0.88*w,height:60,marginLeft:0.06*w,marginBottom:0.06*w,borderTopRightRadius:5,borderBottomRightRadius:5,}}>
                         <View style={{backgroundColor:'#7ABFFD',borderTopLeftRadius:5,borderBottomLeftRadius:5,width:10,height:60}}></View>
                         <TouchableOpacity style={{flexDirection: 'row',justifyContent: 'flex-start',alignItems:'center',width:0.85*w,height:60}}
-                            onPress={()=>this.props.navigation.navigate('PlanCategory',{PlanType: '年度计划'})}>
+                            onPress={()=>this.props.navigation.navigate('ShowPlan',{PlanType: '年度计划',Category:""})}>
                             <Text>   年度计划</Text>
                         </TouchableOpacity>
               </View>  
