@@ -22,7 +22,7 @@ var w=Dimensions.get('window').width;
 var h=Dimensions.get('window').height;  //获得屏幕的宽高
 var PlanItem=[];
 var PlanCount=0
-
+var LeftColor=['#7CBEFD','#BEB3F7','#95C550']
 
 export default class EveryDayPlan extends Component {
   constructor(props) {  
@@ -72,11 +72,11 @@ componentWillMount() {
                       (Item,index)=>{ 
                           return(
                                 <View key={index} style={{backgroundColor:'white',flexDirection:'row', justifyContent: 'flex-start', alignItems: 'center',  width:0.88*w,height:60,marginLeft:0.06*w,marginBottom:0.06*w,borderTopRightRadius:5,borderBottomRightRadius:5,}}>
-                                    <View style={{backgroundColor:'#BEB3F7',borderTopLeftRadius:5,borderBottomLeftRadius:5,width:10,height:60}}></View>
+                                    <View style={{backgroundColor:LeftColor[index % 3],borderTopLeftRadius:5,borderBottomLeftRadius:5,width:10,height:60}}></View>
                                     <TouchableOpacity 
                                         style={{flexDirection: 'row',justifyContent: 'flex-start',alignItems:'center',width:0.85*w,height:60}}
                                          onPress={()=>alert('ok')}>
-                                         <View    style={{backgroundColor:"#BEB3F7",justifyContent: 'center',alignItems: 'center',marginLeft:w*0.02,height:26,width:26, borderColor: '#BEB3F7', borderWidth:1,borderRadius:13}}>                                      
+                                         <View    style={{backgroundColor:LeftColor[index % 3],justifyContent: 'center',alignItems: 'center',marginLeft:w*0.02,height:26,width:26,borderRadius:13}}>                                      
                                                     <Text style={{color:"white",}}>{Item['打卡次数']}</Text>
                                           </View> 
                                         <Text style={{width:0.68*w,marginLeft:5}}> {Item['Plan']}：{Item['ChildPlan']}</Text>

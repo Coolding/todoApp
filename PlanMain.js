@@ -17,9 +17,11 @@ import {
 
 var w=Dimensions.get('window').width;
 var h=Dimensions.get('window').height;  //获得屏幕的宽高
+var LeftColor=['#7CBEFD','#BEB3F7','#95C550']
 
 PlanItem=[],
 SwitchDisabled={'远期计划':true,'年度计划':true,'月度计划':true}
+SwitchFontColor={'远期计划':'black','年度计划':'black','月度计划':'black'}
 
 export default class PlanMain extends Component {
 
@@ -54,6 +56,14 @@ switchPlanType=(PlanType)=>{
                         SwitchDisabled[sw]=true
                    else
                         SwitchDisabled[sw]=false
+
+              }
+               for (var sw in SwitchFontColor)
+              {
+                   if(sw==PlanType)
+                        SwitchFontColor[sw]='#f4f6f6'
+                   else
+                        SwitchFontColor[sw]='black'
 
               }
              
@@ -94,19 +104,19 @@ switchPlanType=(PlanType)=>{
                     style={{backgroundColor:'white',justifyContent: 'center',alignItems:'center',marginLeft:1,width:w/3-1,height:30,borderRadius:5,}}
                     onPress={()=>this.switchPlanType('远期计划')}
                     disabled={SwitchDisabled['远期计划']}>
-                    <Text style={{color:'black',fontSize:20}}>远期计划</Text>
+                    <Text style={{color:SwitchFontColor['远期计划'],fontSize:20}}>远期计划</Text>
                 </TouchableOpacity>
                 <TouchableOpacity 
                     style={{backgroundColor:'white',justifyContent: 'center',alignItems:'center',marginLeft:1,width:w/3-1,height:30,borderRadius:5,}}
                     onPress={()=>this.switchPlanType('年度计划')}
                     disabled={SwitchDisabled['年度计划']}>
-                    <Text style={{color:'black',fontSize:20}}>年度计划</Text>
+                    <Text style={{color:SwitchFontColor['年度计划'],fontSize:20}}>年度计划</Text>
                 </TouchableOpacity>
                 <TouchableOpacity 
                     style={{backgroundColor:'white',justifyContent: 'center',alignItems:'center',marginLeft:1,width:w/3-1,height:30,borderRadius:5,}}
                     onPress={()=>this.switchPlanType('月度计划')}
                     disabled={SwitchDisabled['月度计划']}>
-                    <Text style={{color:'black',fontSize:20}}>月度计划</Text>
+                    <Text style={{color:SwitchFontColor['月度计划'],fontSize:20}}>月度计划</Text>
                 </TouchableOpacity>
         </View>
          <ScrollView style={{width:w}}>
@@ -115,7 +125,7 @@ switchPlanType=(PlanType)=>{
                       (Item,index)=>{ 
                           return(
                                 <View key={index} style={{backgroundColor:'white',flexDirection:'row', justifyContent: 'flex-start', alignItems: 'center',  width:0.88*w,height:60,marginLeft:0.06*w,marginBottom:0.06*w,borderTopRightRadius:5,borderBottomRightRadius:5,}}>
-                                    <View style={{backgroundColor:'#BEB3F7',borderTopLeftRadius:5,borderBottomLeftRadius:5,width:10,height:60}}></View>
+                                    <View style={{backgroundColor:LeftColor[index % 3],borderTopLeftRadius:5,borderBottomLeftRadius:5,width:10,height:60}}></View>
                                     <TouchableOpacity 
                                         style={{flexDirection: 'row',justifyContent: 'flex-start',alignItems:'center',width:0.85*w,height:60}}
                                          onPress={()=>this.gotoShowPlanInfos(Item['ID'])}>

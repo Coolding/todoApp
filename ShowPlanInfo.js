@@ -25,6 +25,7 @@ var w=Dimensions.get('window').width;
 var h=Dimensions.get('window').height;  //获得屏幕的宽高
 var PlanDetail=[]
 var ChildPlanCount=0
+var LeftColor=['#7CBEFD','#BEB3F7','#95C550']
 
 export default class ShowPlanInfo extends Component {
 
@@ -52,7 +53,7 @@ componentWillMount() {
     let formData=new FormData();        
     formData.append("PlanID",params.ParentPlanID); 
     fetch(url,{method:"POST",headers:{},body:formData}).then(response => response.json())
-          .then(data =>{               
+          .then(data =>{      
              PlanDetail=data
              this.setState({target:data[0]['target']})
              this.setState({method:data[0]['method']})
@@ -130,6 +131,7 @@ componentWillMount() {
 
   }
  
+
  //修改计划相关信息：计划内容，目标，方法
 
  modifyPlan=()=>{
@@ -145,6 +147,7 @@ componentWillMount() {
 
 
  }
+
 renderChildPlan() {
     if(ChildPlanCount>0){    //有子计划，则逐条显示  
         ChildPlanCount=0
@@ -153,7 +156,7 @@ renderChildPlan() {
                       (Item,index)=>{ 
                           return(
                                 <View key={index} style={{backgroundColor:'white',flexDirection:'row', justifyContent: 'flex-start', alignItems: 'center',  width:0.88*w,height:60,marginLeft:0.06*w,marginBottom:0.06*w,borderTopRightRadius:5,borderBottomRightRadius:5,}}>
-                                    <View style={{backgroundColor:'#BEB3F7',borderTopLeftRadius:5,borderBottomLeftRadius:5,width:10,height:60}}></View>
+                                    <View style={{backgroundColor:LeftColor[index % 3],borderTopLeftRadius:5,borderBottomLeftRadius:5,width:10,height:60}}></View>
                                     <TouchableOpacity 
                                         style={{flexDirection: 'row',justifyContent: 'flex-start',alignItems:'center',width:0.85*w,height:60}}
                                          onPress={()=>this.props.navigation.navigate('ChildPlanEdit',{ChildPlan: Item['ChildPlan'],ChildID:Item['ChildPlan'],ChildPlanInfo:Item})}>
@@ -164,12 +167,9 @@ renderChildPlan() {
                           )
                       }
         )
-        (
-           
-        )
-        )
+        )}
         
-    }else{    //没有子计划，则不显示
+    else{    //没有子计划，则不显示
          
     }
   } 
@@ -178,13 +178,7 @@ renderChildPlan() {
     return (
        <View  style={styles.container}>  
              <View style={styles.header}>  
-                   <Text style={styles.leftitle}>     </Text>
                   <Text style={styles.headtitle}>计划浏览</Text> 
-                   <TouchableOpacity   
-                    style={{alignSelf:'center',}}            
-                    onPress={()=>this.props.navigation.navigate('AddPlan')}>
-                          <Text style={styles.leftitle}>编辑  </Text> 
-                    </TouchableOpacity>
             </View>  
 
 
@@ -256,7 +250,7 @@ renderChildPlan() {
            <View style={{ width:80}}/>
              <TouchableOpacity   
                     style={{alignSelf:'center',justifyContent: 'center',width:80,height:35,backgroundColor:"#12B7F5",marginTop:10,borderRadius:5}}            
-                    onPress={()=>this.AddChildPlan()}>
+                    onPress={()=>this.props.navigation.navigate('AddChildPlan',{PlanID: this.state.ParentID})}>
                         <Text style={{color:'white',textAlign:'center'}}>添加子计划</Text> 
            </TouchableOpacity>
            </View>
@@ -283,7 +277,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: 40, 
     backgroundColor: '#12B7F5', 
-    justifyContent: 'space-between', 
+    justifyContent: 'center', 
     width:w,
     
 },  

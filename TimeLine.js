@@ -14,6 +14,7 @@ import {
  
 var w=Dimensions.get('window').width;
 var h=Dimensions.get('window').height; 
+var circleColor=['#F19834','#AFB341','#D05B97','#52A24E','#E2728E','#7CBEFD','#BEB3F7','#95C550']
  
 export default class TimeLine extends Component {
   constructor(props) {
@@ -57,7 +58,7 @@ export default class TimeLine extends Component {
                         </View>
                             <View>
                                 <Image source={require('./imgs/ic_order_shu.png')} style={{height:33,marginLeft:25,flex:1}}/>
-                               <View    style={{backgroundColor:"#AFB341",justifyContent: 'center',alignItems: 'center',marginLeft:21,height:8,width:8, borderColor: '#AFB341', borderWidth:1,borderRadius:4}}>
+                               <View    style={{backgroundColor:circleColor[index % 8],justifyContent: 'center',alignItems: 'center',marginLeft:21,height:8,width:8, borderRadius:4}}>
                                                      <View    style={{backgroundColor:"white",height:4,width:4, borderColor: 'white', borderWidth:0,borderRadius:2}}>
                                                       </View>
                                 </View>

@@ -26,7 +26,7 @@ import {
 //import PlanManage from './PlanManage';
 //import PlanCategory from './PlanCategory';
 import RecentPlan from './RecentPlan';
-import ShowPlan from './ShowPlan';
+//import ShowPlan from './ShowPlan';
 import ShowPlanInfo from './ShowPlanInfo';
 //import ShowYearChildPlan from './ShowYearChildPlan';
 import ShowMonthPlanDetail from './ShowMonthPlanDetail';
@@ -36,6 +36,8 @@ import EveryDayPlan from './EveryDayPlan';
 import RecordPlanExeInfo from './RecordPlanExeInfo';
 import PlanMain from './PlanMain';
 import AddPlan from './AddPlan';
+import AddChildPlan from './AddChildPlan';
+
 
 
 
@@ -160,7 +162,7 @@ const todoAPP = StackNavigator({
   //PlanManage: { screen: PlanManage },
   //PlanCategory: { screen: PlanCategory },
   RecentPlan: { screen: RecentPlan },
-  ShowPlan: { screen: ShowPlan },
+  //ShowPlan: { screen: ShowPlan },
   ShowPlanInfo: { screen: ShowPlanInfo },
   //ShowYearChildPlan: { screen: ShowYearChildPlan },
   ShowMonthPlanDetail: { screen: ShowMonthPlanDetail },
@@ -169,6 +171,7 @@ const todoAPP = StackNavigator({
   RecordPlanExeInfo: { screen: RecordPlanExeInfo },
   PlanMain: { screen: PlanMain },
   AddPlan: { screen: AddPlan },
+  AddChildPlan: { screen: AddChildPlan },
 });
 
 AppRegistry.registerComponent('todoAPP', () => todoAPP);
