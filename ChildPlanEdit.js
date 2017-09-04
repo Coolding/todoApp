@@ -15,7 +15,9 @@ import {
   TouchableOpacity,
   Dimensions,
   ScrollView,
-  Switch
+  TextInput,
+  Switch,
+  DatePickerAndroid
 } from 'react-native';
  
 //本文件作用：设置子计划是否年度，月度，近期，每天计划
@@ -35,6 +37,7 @@ export default class ChildPlanEdit extends Component {
         ifMonthChildPlanSwitch:false,
         ifRecentChildPlanSwitch:false,
         ifDayChildPlanSwitch:false,
+        ChildExpectCompleteTime:"",
     }; 
   }  
 
@@ -44,11 +47,15 @@ export default class ChildPlanEdit extends Component {
 
 componentWillMount() {
     const { params } = this.props.navigation.state;    
-    ChildPlanInfo=params.ChildPlanInfo
+    ChildPlanInfo=params.ChildPlanInfo    
+    this.setState({ChildPlan:ChildPlanInfo['ChildPlan']})
     this.setState({ifYearChildPlanSwitch:!!ChildPlanInfo['ifYearChildPlan']})
     this.setState({ifMonthChildPlanSwitch:!!ChildPlanInfo['ifMonthChildPlan']})
     this.setState({ifRecentChildPlanSwitch:!!ChildPlanInfo['ifRecentChildPlan']})
     this.setState({ifDayChildPlanSwitch:!!ChildPlanInfo['ifEverydayChildPlan']})
+    this.setState({ChildExpectCompleteTime:ChildPlanInfo['ChildExpectCompleteTime']})
+
+
   }
 
  
@@ -105,6 +112,38 @@ componentWillMount() {
 
   }
  
+ 
+ //修改子计划相关信息：计划内容
+ modifyChildPlan=()=>{
+    const { params } = this.props.navigation.state;    
+    ChildPlanInfo=params.ChildPlanInfo
+    let url="http://todoapp.applinzi.com/zjclqauotlncvljqoud/modifyChildPlan/";
+    let formData=new FormData();      
+    formData.append("ChildPlan",this.state.ChildPlan); 
+    formData.append("ChildPlanID",ChildPlanInfo['ChildID']); 
+    formData.append("ChildExpectCompleteTime",this.state.ChildExpectCompleteTime);     
+    fetch(url,{method:"POST",headers:{},body:formData}).then(response => response)
+          .then(data =>{  alert("修改成功")   }
+          )
+
+
+ }
+
+deleteChildPlan=()=>{
+
+  const { params } = this.props.navigation.state;    
+    ChildPlanInfo=params.ChildPlanInfo
+    let url="http://todoapp.applinzi.com/zjclqauotlncvljqoud/deleteChildPlan/";
+    let formData=new FormData();      
+    formData.append("ChildPlanID",ChildPlanInfo['ChildID']); 
+    fetch(url,{method:"POST",headers:{},body:formData}).then(response => response)
+          .then(data =>{  this.props.navigation.goBack();   }
+          )
+
+
+ }
+
+ 
 
   render() {
     return (
@@ -112,34 +151,72 @@ componentWillMount() {
             <View style={styles.header}>  
                   <Text style={styles.headtitle}>子计划编辑</Text> 
             </View>  
-            <View style={{backgroundColor: '#FAFFFF',justifyContent: 'center',width:w,marginBottom:2 }}>  
-                    <View style={{height:10}}/> 
-                   <Text style={{marginLeft:10,marginRight:10,lineHeight:25}}>子计划：{ChildPlanInfo['ChildPlan']}</Text>
-                   <View style={{height:10}}/> 
+             <View style={{backgroundColor: '#FAFFFF',justifyContent: 'flex-start',width:w,marginBottom:2 }}>  
+                    <View style={{height:5}}/> 
+                   <TextInput style={{marginLeft:10,marginRight:10,lineHeight:25,textAlignVertical:'bottom'}}
+                              underlineColorAndroid="transparent"
+                              multiline ={true}
+                              onChangeText={(text) =>   this.setState({ChildPlan:text.substring(4)})  }
+                   >子计划：{this.state.ChildPlan}</TextInput>
+                   <View style={{height:5}}/> 
             </View>  
+            <View style={{backgroundColor: '#FAFFFF',justifyContent: 'flex-start',width:w,marginBottom:2 }}>  
+                    <View style={{height:5}}/> 
+                    <View style={{flexDirection: 'row'}}>
+                            <Text style={{marginLeft:10,marginRight:10,lineHeight:25,textAlignVertical:'top',width:0.7*w}}>
+                                  计划完成时间：{this.state.ChildExpectCompleteTime.substring(0,10)}</Text>
+                            <TouchableOpacity   
+                                style={{alignSelf:'center',justifyContent: 'center',width:80,height:35,backgroundColor:"#12B7F5",borderRadius:5}}            
+                                onPress={()=>{
+                                        DatePickerAndroid.open(
+                                        ).then(({action,  year, month, day})=>{
+                                        if(action !== DatePickerAndroid.dismissedAction){
+                                        this.setState({ChildExpectCompleteTime:year+'-'+(month+1)+'-'+day});
+                                        }
+                                        })
+                                        }}>
+                                    <Text style={{color:'white',textAlign:'center'}}>选择</Text> 
+                            </TouchableOpacity>
+
+                    </View>
+                    <View style={{height:5}}/> 
+            </View> 
             <View style={{flexDirection: 'row',justifyContent: 'flex-start',alignItems: 'center',}}>
-            <Text>  年度 </Text>
-              <Switch
-                onValueChange={(value) => this.modifyIfChildPlan(ChildPlanInfo['ChildID'],value,'ifYearChildPlan')}
-                style={{marginBottom:10,marginTop:10}}
-                value={this.state.ifYearChildPlanSwitch}
-                onTintColor='#12B7F5' /><Text>  月度 </Text>
-                <Switch
-                onValueChange={(value)  => this.modifyIfChildPlan(ChildPlanInfo['ChildID'],value,'ifMonthChildPlan')}
-                style={{marginBottom:10,marginTop:10}}
-                value={this.state.ifMonthChildPlanSwitch}
-                onTintColor='#12B7F5' /><Text>  近期 </Text>
-                <Switch
-                onValueChange={(value)  => this.modifyIfChildPlan(ChildPlanInfo['ChildID'],value,'ifRecentChildPlan')}
-                style={{marginBottom:10,marginTop:10}}
-                value={this.state.ifRecentChildPlanSwitch}
-                onTintColor='#12B7F5' /><Text> 每日 </Text>
-                <Switch
-                onValueChange={(value) => this.modifyIfChildPlan(ChildPlanInfo['ChildID'],value,'ifEverydayChildPlan')}
-                style={{marginBottom:10,marginTop:10}}
-                value={this.state.ifDayChildPlanSwitch}
-                onTintColor='#12B7F5' />
+                <Text>  年度 </Text>
+                  <Switch
+                    onValueChange={(value) => this.modifyIfChildPlan(ChildPlanInfo['ChildID'],value,'ifYearChildPlan')}
+                    style={{marginBottom:10,marginTop:10}}
+                    value={this.state.ifYearChildPlanSwitch}
+                    onTintColor='#12B7F5' /><Text>  月度 </Text>
+                    <Switch
+                    onValueChange={(value)  => this.modifyIfChildPlan(ChildPlanInfo['ChildID'],value,'ifMonthChildPlan')}
+                    style={{marginBottom:10,marginTop:10}}
+                    value={this.state.ifMonthChildPlanSwitch}
+                    onTintColor='#12B7F5' /><Text>  近期 </Text>
+                    <Switch
+                    onValueChange={(value)  => this.modifyIfChildPlan(ChildPlanInfo['ChildID'],value,'ifRecentChildPlan')}
+                    style={{marginBottom:10,marginTop:10}}
+                    value={this.state.ifRecentChildPlanSwitch}
+                    onTintColor='#12B7F5' /><Text> 每日 </Text>
+                    <Switch
+                    onValueChange={(value) => this.modifyIfChildPlan(ChildPlanInfo['ChildID'],value,'ifEverydayChildPlan')}
+                    style={{marginBottom:10,marginTop:10}}
+                    value={this.state.ifDayChildPlanSwitch}
+                    onTintColor='#12B7F5' />
             </View>
+            <View style={{flexDirection: 'row',justifyContent: 'center',alignItems: 'center',}}>
+                <TouchableOpacity   
+                        style={{alignSelf:'center',justifyContent: 'center',width:80,height:35,backgroundColor:"#12B7F5",marginTop:10,marginLeft:80,borderRadius:5}}            
+                        onPress={()=>this.deleteChildPlan()}>
+                            <Text style={{color:'white',textAlign:'center'}}>删除</Text> 
+              </TouchableOpacity>
+              <View style={{width:0.2*w}}/>
+                <TouchableOpacity   
+                        style={{alignSelf:'center',justifyContent: 'center',width:80,height:35,backgroundColor:"#12B7F5",marginTop:10,borderRadius:5}}            
+                        onPress={()=>this.modifyChildPlan()}>
+                            <Text style={{color:'white',textAlign:'center'}}>保存修改</Text> 
+              </TouchableOpacity>
+           </View>   
        </View>   
      
     );

@@ -19,8 +19,9 @@ import {
 } from 'react-native';
  
 
- var w=Dimensions.get('window').width;
+var w=Dimensions.get('window').width;
 var h=Dimensions.get('window').height;  //获得屏幕的宽高
+var PlanID;
 
 export default class RecordPlanExeInfo extends Component {
   constructor(props) {  
@@ -36,12 +37,16 @@ export default class RecordPlanExeInfo extends Component {
      header:null
   };
 
-componentWillMount() {      
+componentWillMount() {    
+  const { params } = this.props.navigation.state; 
+  PlanID=params.ID
+ 
   }
 
 //记录计划执行情况
   record=()=>{
-    const { params } = this.props.navigation.state;  
+    const { params } = this.props.navigation.state; 
+    
     let url="http://todoapp.applinzi.com/lkjqkrjuouzlxcvjat/RecordPlanExeProgress/";
     let formData=new FormData();      
     formData.append("ChildID",params.ChildID); 
@@ -66,11 +71,11 @@ componentWillMount() {
                     <Text style={styles.headtitle}>执行情况记录</Text> 
                     <TouchableOpacity   
                     style={{alignSelf:'center',}}            
-                    onPress={()=>alert('ok')}>
+                    onPress={()=>this.props.navigation.navigate('ShowPlanInfo',{ParentPlanID:PlanID})}>
                           <Text style={styles.leftitle}>编辑  </Text> 
                     </TouchableOpacity>
               </View>  
-
+            
               <View  style={{width:w*0.98,marginTop:10,height:40,flexDirection: 'row',alignItems:'flex-start',marginBottom:10}} >
                       <TextInput
                       style={{marginLeft:w*0.02,marginBottom:10,height:40,width:w*0.75, borderColor: 'gray', borderWidth:1,borderRadius:5}}

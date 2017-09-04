@@ -51,10 +51,7 @@ componentWillMount() {
       })
  }
  
-gotoRecordExeInfo=()=>{
-
-
-}
+ 
   render() {
     return (
      

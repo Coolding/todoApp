@@ -33,7 +33,7 @@ export default class AddPlan extends Component {
        target:'',
        method:'',
        PlanTypeSelected:'远期计划',  //计划类型
-       expectCompleteTime:"",
+       expectCompleteTime:new Date(),
 
     }; 
   }  
@@ -43,7 +43,8 @@ export default class AddPlan extends Component {
   };
 
 componentWillMount() {    
-    
+    this.setState({expectCompleteTime:this.state.expectCompleteTime.getFullYear()+'-'+(this.state.expectCompleteTime.getMonth()+1)+'-'+this.state.expectCompleteTime.getDate()})
+     
 
   }
 
@@ -97,9 +98,10 @@ AddOnePlan=()=>
                 <Picker.Item label='每日计划' value='每日计划'/>
             </Picker>
               <View>
-                <Button title='预计完成时间：' onPress={()=>{
+                <Button 
+    
+                title={'预计完成时间：'+this.state.expectCompleteTime} onPress={()=>{
                     DatePickerAndroid.open(
-
                     ).then(({action,  year, month, day})=>{
                         if(action !== DatePickerAndroid.dismissedAction){
                            this.setState({expectCompleteTime:year+'-'+(month+1)+'-'+day});

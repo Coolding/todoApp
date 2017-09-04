@@ -16,7 +16,8 @@ import {
   Dimensions,
   ScrollView,
   Switch,
-  TextInput
+  TextInput,
+  DatePickerAndroid
 } from 'react-native';
  
 //本文件作用：显示长期任务下每一个目标任务的目标，方法，各项子目标等详细内容
@@ -35,6 +36,7 @@ export default class ShowPlanInfo extends Component {
         target:'',
         method:'',
         ParentPlan:'',
+        expectCompleteTime:"",
         ifYearPlanSwitch:false,
         ifMonthPlanSwitch:false,
         ifRecentPlanSwitch:false,
@@ -52,6 +54,7 @@ componentWillMount() {
     let url="http://todoapp.applinzi.com/zljeurlzhdlqieut/getChildPlans/";
     let formData=new FormData();        
     formData.append("PlanID",params.ParentPlanID); 
+ 
     fetch(url,{method:"POST",headers:{},body:formData}).then(response => response.json())
           .then(data =>{      
              PlanDetail=data
@@ -59,6 +62,7 @@ componentWillMount() {
              this.setState({method:data[0]['method']})
              this.setState({ParentPlan:data[0]['Plan']})
              this.setState({ParentID:data[0]['ID']})
+             this.setState({expectCompleteTime:data[0]['expectCompleteTime']})
             this.setState({ifYearPlanSwitch:!!data[0]['ifYearPlan']})
             this.setState({ifMonthPlanSwitch:!!data[0]['ifMonthPlan']})
             this.setState({ifRecentPlanSwitch:!!data[0]['ifRecentPlan']})
@@ -133,20 +137,32 @@ componentWillMount() {
  
 
  //修改计划相关信息：计划内容，目标，方法
-
  modifyPlan=()=>{
     let url="http://todoapp.applinzi.com/zjclqauotlncvljqoud/modifyPlan/";
     let formData=new FormData();      
     formData.append("target",this.state.target); 
     formData.append("method",this.state.method); 
     formData.append("ParentPlan",this.state.ParentPlan); 
-    formData.append("ParentID",this.state.ParentID);     
+    formData.append("ParentID",this.state.ParentID);  
+     formData.append("expectCompleteTime",this.state.expectCompleteTime);   
     fetch(url,{method:"POST",headers:{},body:formData}).then(response => response)
-          .then(data =>{  alert("修改成功")   }
+          .then(data =>{  alert('修改成功')   }
           )
 
 
  }
+
+deletePlan=()=>{
+    let url="http://todoapp.applinzi.com/zjclqauotlncvljqoud/deletePlan/";
+    let formData=new FormData();      
+    formData.append("ID",this.state.ParentID);  
+    fetch(url,{method:"POST",headers:{},body:formData}).then(response => response)
+          .then(data =>{  this.props.navigation.goBack();}
+          )
+
+
+ }
+
 
 renderChildPlan() {
     if(ChildPlanCount>0){    //有子计划，则逐条显示  
@@ -159,7 +175,7 @@ renderChildPlan() {
                                     <View style={{backgroundColor:LeftColor[index % 3],borderTopLeftRadius:5,borderBottomLeftRadius:5,width:10,height:60}}></View>
                                     <TouchableOpacity 
                                         style={{flexDirection: 'row',justifyContent: 'flex-start',alignItems:'center',width:0.85*w,height:60}}
-                                         onPress={()=>this.props.navigation.navigate('ChildPlanEdit',{ChildPlan: Item['ChildPlan'],ChildID:Item['ChildPlan'],ChildPlanInfo:Item})}>
+                                         onPress={()=>this.props.navigation.navigate('ChildPlanEdit',{ChildPlanInfo:Item})}>
                                         <Text style={{width:0.68*w,marginLeft:5}}>{Item['ChildPlan']}</Text>
                                     </TouchableOpacity>
                                     
@@ -183,34 +199,57 @@ renderChildPlan() {
 
 
             <View style={{backgroundColor: '#FAFFFF',justifyContent: 'center',width:w,marginBottom:2 }}>  
-                    <View style={{height:10}}/> 
+                    <View style={{height:5}}/> 
                    <TextInput style={{marginLeft:10,marginRight:10,lineHeight:25}}
                               underlineColorAndroid="transparent"
                               multiline ={true}
                               onChangeText={(text) =>   this.setState({ParentPlan:text.substring(3)})  }
                    >任务：{this.state.ParentPlan}</TextInput>
-                   <View style={{height:10}}/> 
+                   <View style={{height:5}}/> 
             </View>  
+            <ScrollView>
             <View style={{backgroundColor: '#FAFFFF',justifyContent: 'flex-start',width:w,marginBottom:2 }}>  
-                    <View style={{height:10}}/> 
+                    <View style={{height:5}}/> 
                    <TextInput style={{marginLeft:10,marginRight:10,lineHeight:25,textAlignVertical:'bottom'}}
                               underlineColorAndroid="transparent"
                               multiline ={true}
-                              numberOfLines={ Math.ceil(this.state.target.length/20)}
+                              numberOfLines={ (!this.state.target)?1:Math.ceil(this.state.target.length/20)}
                               onChangeText={(text) =>   this.setState({target:text.substring(3)})  }
                    >目标：{this.state.target}</TextInput>
-                   <View style={{height:10}}/> 
+                   <View style={{height:5}}/> 
             </View>  
             <View style={{backgroundColor: '#FAFFFF',justifyContent: 'flex-start',width:w,marginBottom:2 }}>  
-                    <View style={{height:10}}/> 
+                    <View style={{height:5}}/> 
                    <TextInput style={{marginLeft:10,marginRight:10,lineHeight:25,textAlignVertical:'top'}}
                               underlineColorAndroid="transparent"
                               multiline ={true}
                               onChangeText={(text) =>   this.setState({method:text.substring(3)})  }
                    >方法：{this.state.method}</TextInput>
-                   <View style={{height:10}}/> 
+                   <View style={{height:5}}/> 
             </View> 
+            <View style={{backgroundColor: '#FAFFFF',justifyContent: 'flex-start',width:w,marginBottom:2 }}>  
+                    <View style={{height:5}}/> 
+                    <View style={{flexDirection: 'row'}}>
+                            <Text style={{marginLeft:10,marginRight:10,lineHeight:25,textAlignVertical:'top',width:0.7*w}}>
+                                  计划完成时间：{this.state.expectCompleteTime.substring(0,10)}</Text>
+                              <TouchableOpacity   
+                                style={{alignSelf:'center',justifyContent: 'center',width:80,height:35,backgroundColor:"#12B7F5",borderRadius:5}}            
+                                onPress={()=>{
+                                        DatePickerAndroid.open(
+                                        ).then(({action,  year, month, day})=>{
+                                        if(action !== DatePickerAndroid.dismissedAction){
+                                        this.setState({expectCompleteTime:year+'-'+(month+1)+'-'+day});
+                                        }
+                                        })
+                                        }}>
+                                    <Text style={{color:'white',textAlign:'center'}}>选择</Text> 
+                            </TouchableOpacity>
 
+
+                           
+                    </View>
+                    <View style={{height:5}}/> 
+            </View> 
 
             <View style={{flexDirection: 'row',justifyContent: 'flex-start',alignItems: 'center',}}>
               <Text>  年度 </Text>
@@ -235,27 +274,33 @@ renderChildPlan() {
                 value={this.state.ifDayPlanSwitch}
                 onTintColor='#12B7F5' />
             </View>
-            <ScrollView>
+            
              {
                 this.renderChildPlan()
                 
             }
             <View style={{ flexDirection: 'row',alignSelf:'center',justifyContent: 'center',width:w}}>
-
+            <TouchableOpacity   
+                    style={{alignSelf:'center',justifyContent: 'center',width:80,height:35,backgroundColor:"#12B7F5",marginTop:10,borderRadius:5}}            
+                    onPress={()=>this.deletePlan()}>
+                        <Text style={{color:'white',textAlign:'center'}}>删除</Text> 
+           </TouchableOpacity>
+           <View style={{ width:30}}/>
             <TouchableOpacity   
                     style={{alignSelf:'center',justifyContent: 'center',width:80,height:35,backgroundColor:"#12B7F5",marginTop:10,borderRadius:5}}            
                     onPress={()=>this.modifyPlan()}>
                         <Text style={{color:'white',textAlign:'center'}}>保存修改</Text> 
            </TouchableOpacity>
-           <View style={{ width:80}}/>
+           <View style={{ width:30}}/>
              <TouchableOpacity   
                     style={{alignSelf:'center',justifyContent: 'center',width:80,height:35,backgroundColor:"#12B7F5",marginTop:10,borderRadius:5}}            
                     onPress={()=>this.props.navigation.navigate('AddChildPlan',{PlanID: this.state.ParentID})}>
                         <Text style={{color:'white',textAlign:'center'}}>添加子计划</Text> 
            </TouchableOpacity>
            </View>
-            </ScrollView>
-
+           <View style={{ height:20,width:w}}/>
+          </ScrollView>
+         
             
        </View>   
      

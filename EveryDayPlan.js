@@ -51,6 +51,25 @@ componentWillMount() {
       })
  }
  
+ //记录计划执行情况
+  record=(ID,ChildID)=>{
+    const { params } = this.props.navigation.state; 
+    
+    let url="http://todoapp.applinzi.com/lkjqkrjuouzlxcvjat/RecordPlanExeProgress/";
+    let formData=new FormData();      
+    formData.append("ChildID",ChildID); 
+    formData.append("ID",ID); 
+    formData.append("PlanCostTime",0); 
+    formData.append("PlanExeInfo",'每日打卡');  
+
+    fetch(url,{method:"POST",headers:{},body:formData}).then(response => response)
+          .then(data =>{ 
+              this.forceUpdate();
+          })
+
+  }
+
+
 
   render() {
     return (
@@ -75,7 +94,7 @@ componentWillMount() {
                                     <View style={{backgroundColor:LeftColor[index % 3],borderTopLeftRadius:5,borderBottomLeftRadius:5,width:10,height:60}}></View>
                                     <TouchableOpacity 
                                         style={{flexDirection: 'row',justifyContent: 'flex-start',alignItems:'center',width:0.85*w,height:60}}
-                                         onPress={()=>alert('ok')}>
+                                         onPress={()=>this.record(Item['ID'],Item['ChildID'])}>
                                          <View    style={{backgroundColor:LeftColor[index % 3],justifyContent: 'center',alignItems: 'center',marginLeft:w*0.02,height:26,width:26,borderRadius:13}}>                                      
                                                     <Text style={{color:"white",}}>{Item['打卡次数']}</Text>
                                           </View> 
