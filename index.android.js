@@ -37,6 +37,7 @@ import RecordPlanExeInfo from './RecordPlanExeInfo';
 import PlanMain from './PlanMain';
 import AddPlan from './AddPlan';
 import AddChildPlan from './AddChildPlan';
+import TimeLineForOnePlan from './TimeLineForOnePlan';
 
 
 
@@ -55,7 +56,7 @@ export default class HomeScreen extends Component {
   constructor(props) {  
     super(props); 
      this.state = {
-      selectedTab:'PlanMain',
+      selectedTab:'RecentPlan',
     };   
   }  
 
@@ -72,12 +73,12 @@ static navigationOptions = {
         <TabNavigator   Style={styles.tab} >
 
             <TabNavigator.Item
-            selected={this.state.selectedTab === 'Browse'}
+            selected={this.state.selectedTab === 'RecentPlan'}
             title="近期"
             renderIcon={() => <Image source={require('./assets/1.png')} style={styles.iconStyle}/>}
             renderSelectedIcon={() => <Image source={require('./assets/12.png')} style={styles.iconStyle}/>}
             badgeText=""
-            onPress={() => this.setState({ selectedTab: 'Browse' })}>    
+            onPress={() => this.setState({ selectedTab: 'RecentPlan' })}>    
             <RecentPlan {...this.props}  />
             </TabNavigator.Item>
 
@@ -172,6 +173,7 @@ const todoAPP = StackNavigator({
   PlanMain: { screen: PlanMain },
   AddPlan: { screen: AddPlan },
   AddChildPlan: { screen: AddChildPlan },
+  TimeLineForOnePlan: { screen: TimeLineForOnePlan },
 });
 
 AppRegistry.registerComponent('todoAPP', () => todoAPP);

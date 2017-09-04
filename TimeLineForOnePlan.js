@@ -11,12 +11,12 @@ import {
   ScrollView,
 } from 'react-native';
 
-//本文件作用：显示所有任务的历史执行情况
+//本文件作用：单独显示某一个任务的历史执行情况
 var w=Dimensions.get('window').width;
 var h=Dimensions.get('window').height; 
 var circleColor=['#F19834','#AFB341','#D05B97','#52A24E','#E2728E','#7CBEFD','#BEB3F7','#95C550']
  
-export default class TimeLine extends Component {
+export default class TimeLineForOnePlan extends Component {
   constructor(props) {
     super(props);    
     this.state={   
@@ -24,18 +24,22 @@ export default class TimeLine extends Component {
       }
   } 
    
+ static navigationOptions = {
+     header:null
+  };
 
-   componentWillMount() {
+ componentWillMount() {
          this.refresh()
     
   }
  
 refresh=()=>
 {
+    const { params } = this.props.navigation.state;
     let url="http://todoapp.applinzi.com/queorqljbvmaluzoqn/GETPlanExeLog/";
     let formData=new FormData();        
-    formData.append("PlanID","");  
-    formData.append("ChildPlanID","");      
+    formData.append("PlanID",params.ID?params.ID:"");  
+    formData.append("ChildPlanID",params.ChildID?params.ChildID:"");   
     fetch(url,{method:"POST",headers:{},body:formData}).then(response => response.json())
           .then(data =>{ 
             this.setState({ExeLog:data})    
@@ -75,18 +79,13 @@ refresh=()=>
                                 </View>
                                 <Image source={require('./imgs/ic_order_shu.png')} style={{marginLeft:10}}/>
                             </View>
-
                                 <View style={{height:15}}/>
                                         <View style={{backgroundColor:"white",height:75,marginLeft:5,width:(w-90),borderRadius:8}}>
-                                            <TouchableOpacity   
-                                                    style={{alignSelf:'center',}}            
-                                                    onPress={()=>this.props.navigation.navigate('TimeLineForOnePlan',{ID:LogItem['ID'],ChildID:LogItem['ChildID']})}>
-                                                     <View style={{flexDirection: 'row',justifyContent: 'space-between',alignItems: 'center',width:(w-90)}}>
-                                                          <View style={{width:w-150}}><Text style={{marginLeft:5,lineHeight:25}}>{LogItem['Plan']}{LogItem['ChildPlan']?(":"+LogItem['ChildPlan']):""}</Text></View>
-                                                         <View style={{width:70,marginRight:5}}><Text  style={{lineHeight:25}}>{LogItem['CostTime']}分钟</Text></View>
-                                                     </View>
-                                                      <Text style={{marginLeft:5,color:"#A0A0A0",lineHeight:25}}>{LogItem['progress']}</Text>   
-                                             </TouchableOpacity>                                            
+                                            <View style={{flexDirection: 'row',justifyContent: 'space-between',alignItems: 'center',width:(w-90)}}>
+                                                <View style={{width:w-150}}><Text style={{marginLeft:5,lineHeight:25}}>{LogItem['Plan']}{LogItem['ChildPlan']?(":"+LogItem['ChildPlan']):""}</Text></View>
+                                                <View style={{width:70,marginRight:5}}><Text  style={{lineHeight:25}}>{LogItem['CostTime']}分钟</Text></View>
+                                            </View>
+                                            <Text style={{marginLeft:5,color:"#A0A0A0",lineHeight:25}}>{LogItem['progress']}</Text>
                                         </View>
                                 <View style={{height:15}}/>    
                         </View>

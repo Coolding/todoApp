@@ -67,8 +67,6 @@ componentWillMount() {
             this.setState({ifMonthPlanSwitch:!!data[0]['ifMonthPlan']})
             this.setState({ifRecentPlanSwitch:!!data[0]['ifRecentPlan']})
             this.setState({ifDayPlanSwitch:!!data[0]['ifEverydayPlan']})
-
-
              if(data.length==1 && !data[0]['ChildPlan'])    //没有子计划
                 ChildPlanCount=0
              else{
@@ -166,7 +164,7 @@ deletePlan=()=>{
 
 renderChildPlan() {
     if(ChildPlanCount>0){    //有子计划，则逐条显示  
-        ChildPlanCount=0
+        //ChildPlanCount=0
     return(
        PlanDetail.map(
                       (Item,index)=>{ 

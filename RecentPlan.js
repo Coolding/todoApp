@@ -70,13 +70,15 @@ componentWillMount() {
              {
                 PlanItem.map(
                       (Item,index)=>{ 
+                           
                           return(
                                 <View key={index} style={{backgroundColor:'white',flexDirection:'row', justifyContent: 'flex-start', alignItems: 'center',  width:0.88*w,height:60,marginLeft:0.06*w,marginBottom:0.06*w,borderTopRightRadius:5,borderBottomRightRadius:5,}}>
                                     <View style={{backgroundColor:LeftColor[index % 3],borderTopLeftRadius:5,borderBottomLeftRadius:5,width:10,height:60}}></View>
                                     <TouchableOpacity 
-                                        style={{flexDirection: 'row',justifyContent: 'flex-start',alignItems:'center',width:0.85*w,height:60}}
+                                        style={{flexDirection: 'column',justifyContent: 'center',alignItems:'flex-start',width:0.85*w,height:70}}
                                          onPress={()=>this.props.navigation.navigate('RecordPlanExeInfo',{ID:Item['ID'],ChildID:Item['ChildID']})}>
-                                        <Text style={{width:0.68*w,marginLeft:5,lineHeight:25,}}>{Item['Plan']}：{Item['ChildPlan']}</Text>
+                                        <Text style={{width:0.8*w,marginLeft:8,lineHeight:22,}}>{Item['Plan']}：{Item['ChildPlan']}</Text>
+                                        <Text style={{width:0.8*w,marginLeft:8,lineHeight:22,}}>截止：{!Item['ChildID']?Item['expectCompleteTime'].substring(0,10):Item['ChildExpectCompleteTime'].substring(0,10)}</Text>
                                     </TouchableOpacity>
                                     
                                 </View>  

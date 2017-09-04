@@ -90,7 +90,11 @@ switchPlanType=(PlanType)=>{
     return (
         <View  style={styles.container}>  
             <View style={styles.header}>  
-                   <Text style={styles.leftitle}>    </Text>
+                   <TouchableOpacity   
+                    style={{alignSelf:'center',}}            
+                    onPress={()=>this.switchPlanType(this.state.PlanType)}>
+                          <Text style={styles.leftitle}>    刷新 </Text> 
+                    </TouchableOpacity>
                   <Text style={styles.headtitle}>{this.state.PlanType}</Text> 
                   <TouchableOpacity   
                     style={{alignSelf:'center',}}            
@@ -129,7 +133,7 @@ switchPlanType=(PlanType)=>{
                                     <TouchableOpacity 
                                         style={{flexDirection: 'row',justifyContent: 'flex-start',alignItems:'center',width:0.85*w,height:60}}
                                          onPress={()=>this.gotoShowPlanInfos(Item['ID'])}>
-                                        <Text style={{width:0.68*w,marginLeft:5}}>{Item['category']}：{Item['Plan']}</Text>
+                                        <Text style={{width:0.8*w,marginLeft:8}}>{Item['category']}：{Item['Plan']}</Text>
 
                                     </TouchableOpacity>
                                     

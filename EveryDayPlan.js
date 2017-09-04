@@ -45,7 +45,7 @@ componentWillMount() {
       let formData=new FormData();        
       fetch(url,{method:"GET",headers:{}}).then(response => response.json())
       .then(data =>{          
-      PlanItem=data.slice(0,3);   //最多只显示三条近期计划，以利于集中火力！
+      PlanItem=data.slice(0,5);   //最多只显示三条近期计划，以利于集中火力！
       PlanCount=data.length
       this.forceUpdate();
       })
@@ -64,7 +64,7 @@ componentWillMount() {
 
     fetch(url,{method:"POST",headers:{},body:formData}).then(response => response)
           .then(data =>{ 
-              this.forceUpdate();
+              this.update();
           })
 
   }
